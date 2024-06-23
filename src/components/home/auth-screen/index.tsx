@@ -1,6 +1,12 @@
 import UnderlineText from '~/components/decorators/underline-text'
 import HeroSection from './hero-section'
 import TodayHighlight from './today-highlight'
+import RotatedText from '~/components/decorators/rotated-text'
+import MasonryGrid from './masonry-grid'
+import Features from './features'
+import Testimonials from './testimonials'
+import Pricing from '~/components/pricing'
+import Team from './team'
 
 const AuthScreen = () => {
     return (
@@ -20,6 +26,19 @@ const AuthScreen = () => {
                     {/* FEATURE POST */}
                     <div className="flex flex-col gap-10 mt-10">
                         <TodayHighlight />
+
+                        <div className="mt-24">
+                            <p className="text-2xl md:text-5xl text-center tracking-tighter font-bold">
+                                Meet the <RotatedText>Stars</RotatedText> of Our Farm
+                            </p>
+
+                            <MasonryGrid />
+                        </div>
+
+                        <Features />
+                        <Testimonials />
+                        <Pricing />
+                        <Team />
                     </div>
                 </div>
             </div>

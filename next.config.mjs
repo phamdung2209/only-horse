@@ -1,4 +1,17 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'avatar.vercel.sh',
+            },
+            {
+                protocol: 'https',
+                hostname: 'i.pravatar.cc',
+            },
+        ],
+    },
+}
 
-export default nextConfig;
+export default nextConfig
