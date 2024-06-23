@@ -230,6 +230,7 @@ const Pricing = () => {
                                             }
                                         }}
                                         size="lg"
+                                        disabled={loading}
                                     >
                                         <Link href={'/api/auth/login'}>
                                             {loading ? (
