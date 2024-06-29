@@ -1,11 +1,13 @@
 import BaseLayout from '~/components/base-layout'
+import UserProfile from './user-profile'
+import { memo } from 'react'
 
 const HomeScreen = () => {
     return (
-        <div>
-            <BaseLayout>sssss</BaseLayout>
-        </div>
+        <BaseLayout>
+            <UserProfile />
+        </BaseLayout>
     )
 }
 
-export default HomeScreen
+export default memo(HomeScreen)

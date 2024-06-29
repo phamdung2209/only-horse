@@ -3,6 +3,9 @@ const routes = {
     about: '/about',
     contact: '/contact',
     notFound: '/404',
+    updateProfile: '/update-profile',
+    merch: '/merch',
+    dashboard: '/dashboard',
 }
 
 export default routes

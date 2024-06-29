@@ -1,33 +1,48 @@
 'use client'
 
-import { memo } from 'react'
-import { Moon, Sun } from 'lucide-react'
+import { MoonIcon, Settings, SunIcon, SunMoon } from 'lucide-react'
 import { useTheme } from 'next-themes'
+import { memo } from 'react'
 
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from './ui/dropdown-menu'
-import { Button } from './ui/button'
+
+export const themes = ['light', 'dark', 'system'] as const
 
 const ModeToggle = () => {
-    const { setTheme } = useTheme()
+    const { theme, setTheme } = useTheme()
 
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="icon">
-                    <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                    <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                    <span className="sr-only">Toggle theme</span>
-                </Button>
+            <DropdownMenuTrigger className="flex w-12 lg:w-full items-center gap-2 hover:bg-primary-foreground font-bold hover:text-primary px-2 py-1 rounded-full justify-center lg:justify-normal">
+                <SunMoon className="w-6 h-6" />
+                <span className="hidden lg:block">Theme</span>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => setTheme('light')}>Light</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme('dark')}>Dark</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme('system')}>System</DropdownMenuItem>
+
+            <DropdownMenuContent>
+                <DropdownMenuLabel>Choose your theme</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+
+                {themes.map((t) => (
+                    <DropdownMenuItem
+                        key={t}
+                        className={`cursor-pointer flex items-center gap-3 capitalize ${
+                            theme === t && 'font-bold text-primary'
+                        }`}
+                        onClick={() => setTheme(t)}
+                    >
+                        {t === 'light' && <SunIcon />}
+                        {t === 'dark' && <MoonIcon />}
+                        {t === 'system' && <Settings />}
+                        <span>{t}</span>
+                    </DropdownMenuItem>
+                ))}
             </DropdownMenuContent>
         </DropdownMenu>
     )
