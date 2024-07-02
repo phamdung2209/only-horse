@@ -6,6 +6,7 @@ const routes = {
     updateProfile: '/update-profile',
     merch: '/merch',
     dashboard: '/dashboard',
+    pricing: '/pricing',
 }
 
 export default routes
