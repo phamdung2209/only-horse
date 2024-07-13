@@ -1,7 +1,10 @@
 'use client'
 
+import { CldUploadWidget, CloudinaryUploadWidgetInfo } from 'next-cloudinary'
 import { useState } from 'react'
+
 import UnderlineText from '~/components/decorators/underline-text'
+import { Button } from '~/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
 import { Label } from '~/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '~/components/ui/radio-group'
@@ -62,6 +65,26 @@ const ContentTab = () => {
                                 <p>Image</p>
                             </Label>
                         </RadioGroup>
+
+                        <CldUploadWidget
+                            signatureEndpoint="/api/sign-image"
+                            options={{ sources: ['local', 'unsplash'], folder: 'horse' }}
+                            onSuccess={(res) =>
+                                setMediaUrl((res.info as CloudinaryUploadWidgetInfo).secure_url)
+                            }
+                        >
+                            {({ open }) => {
+                                return (
+                                    <Button
+                                        onClick={() => open()}
+                                        variant={'outline'}
+                                        type="button"
+                                    >
+                                        Upload an Image
+                                    </Button>
+                                )
+                            }}
+                        </CldUploadWidget>
                     </CardContent>
                 </Card>
             </form>
