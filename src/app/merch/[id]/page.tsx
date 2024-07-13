@@ -2,13 +2,19 @@ import BaseLayout from '~/components/base-layout'
 import UnderlineText from '~/components/decorators/underline-text'
 import ProductCard from '~/components/product-card'
 import { products } from '~/dummy_data/db'
+import ProductCheckout from './product-checkout'
 
-const Merch = () => {
+const Page = ({ params }: { params: { id: string } }) => {
     return (
         <BaseLayout renderRightPanel={false}>
-            <div className="px-3 md:px-10 my-10">
-                <h1 className="text-3xl text-center my-5 font-bold tracking-tight">
-                    Our <UnderlineText className="decoration-wavy">Products</UnderlineText>
+            <div className="px-3 md:px-7 my-20">
+                <ProductCheckout product={products.find((p) => p.id === params.id)!} />
+
+                <h1 className="text-3xl text-center mt-20 mb-10 font-bold tracking-tight">
+                    More product from{' '}
+                    <UnderlineText className="decoration-wavy underline-offset-8">
+                        OnlyHorse
+                    </UnderlineText>
                 </h1>
 
                 <div className="grid gap-5 grid-cols-1 md:grid-cols-2">
@@ -21,4 +27,4 @@ const Merch = () => {
     )
 }
 
-export default Merch
+export default Page

@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import { memo, use } from 'react'
 import config from '~/configs'
 import Sidebar from './sidebar'
+import SuggestedProducts from './suggested-products'
 
 const BaseLayout = ({
     children,
@@ -21,7 +22,7 @@ const BaseLayout = ({
             <Sidebar />
 
             <div className="w-full lg:w-3/5 flex flex-col border-r">{children}</div>
-            {renderRightPanel && 'Suggested Products'}
+            {renderRightPanel && <SuggestedProducts />}
         </div>
     )
 }

@@ -1,6 +1,6 @@
 export const admin = {
     id: 1,
-    name: 'Admin',
+    name: 'Dung Pham',
     email: 'admin@gmail.com',
     image: 'https://avatar.iran.liara.run/public/boy?username=bob',
 }

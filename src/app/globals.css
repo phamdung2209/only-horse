@@ -63,3 +63,54 @@
 .bg-noise {
     background-image: url('/noise.svg');
 }
+
+.bg-of {
+    background-image: url('/of-logo.svg');
+    background-repeat: no-repeat;
+    background-position: -100px 100px;
+    background-size: 90%;
+}
+
+html ::-webkit-scrollbar {
+    border-radius: 0px;
+    width: 8px;
+}
+
+html *::-webkit-scrollbar {
+    border-radius: 0;
+    width: 8px;
+}
+
+html ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: hsl(var(--input));
+    cursor: grab;
+}
+
+html ::-webkit-scrollbar-thumb:active {
+    cursor: grabbing;
+}
+
+html ::-webkit-scrollbar-thumb:hover {
+    opacity: 1;
+}
+
+html *::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: hsl(var(--input));
+    cursor: grab;
+}
+
+html *::-webkit-scrollbar-thumb:active {
+    cursor: grabbing;
+}
+
+html ::-webkit-scrollbar-track {
+    border-radius: 0px;
+    background-color: hsl(var(--background));
+}
+
+html *::-webkit-scrollbar-track {
+    border-radius: 0;
+    background-color: hsl(var(--background));
+}
