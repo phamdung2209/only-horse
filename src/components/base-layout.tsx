@@ -1,9 +1,10 @@
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 import { redirect } from 'next/navigation'
 import { memo, use } from 'react'
+
 import config from '~/configs'
-import Sidebar from './sidebar'
 import SuggestedProducts from './suggested-products'
+import Sidebar from './sidebar'
 
 const BaseLayout = ({
     children,

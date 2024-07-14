@@ -5,6 +5,7 @@ import './globals.css'
 import 'next-cloudinary/dist/cld-video-player.css'
 import { ThemeProvider } from '~/components/providers/theme-provider'
 import Footer from '~/components/footer'
+import TanStackProvider from '~/providers/tan-stack-provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -28,7 +29,9 @@ export default function RootLayout({
                     disableTransitionOnChange
                 >
                     <main className="h-screen flex flex-col">
-                        <div className="flex-1">{children}</div>
+                        <div className="flex-1">
+                            <TanStackProvider>{children}</TanStackProvider>
+                        </div>
                         <Footer />
                     </main>
                 </ThemeProvider>
