@@ -14,8 +14,21 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'firebasestorage.googleapis.com',
             },
+            {
+                protocol: 'https',
+                hostname: 'res.cloudinary.com',
+            },
         ],
     },
+    // config proxy
+    // async rewrites() {
+    //     return [
+    //         {
+    //             source: '/:path*',
+    //             destination: 'https://dungpv-api.vercel.app/:path*',
+    //         },
+    //     ]
+    // },
 }
 
 export default nextConfig

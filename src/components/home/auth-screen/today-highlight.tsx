@@ -1,7 +1,6 @@
 'use client'
 
 import { memo } from 'react'
-import 'next-cloudinary/dist/cld-video-player.css'
 import { CldVideoPlayer } from 'next-cloudinary'
 
 const TodayHighlight = () => {

@@ -1,11 +1,22 @@
 'use client'
 
-import { CldUploadWidget, CloudinaryUploadWidgetInfo } from 'next-cloudinary'
+import { Terminal, TriangleAlert } from 'lucide-react'
+import { CldUploadWidget, CldVideoPlayer, CloudinaryUploadWidgetInfo } from 'next-cloudinary'
+import Image from 'next/image'
 import { useState } from 'react'
 
 import UnderlineText from '~/components/decorators/underline-text'
+import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert'
 import { Button } from '~/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card'
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from '~/components/ui/card'
+import { Checkbox } from '~/components/ui/checkbox'
 import { Label } from '~/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '~/components/ui/radio-group'
 import { Textarea } from '~/components/ui/textarea'
@@ -13,7 +24,7 @@ import { Textarea } from '~/components/ui/textarea'
 const ContentTab = () => {
     console.log('render ContentTab')
     const [textareaValue, setTextareaValue] = useState<string>('')
-    const [mediaType, setMediaType] = useState<'video' | 'image'>('video')
+    const [mediaType, setMediaType] = useState<'video' | 'image'>('image')
     const [isPublic, setIsPublic] = useState<boolean>(false)
     const [mediaUrl, setMediaUrl] = useState<string>('')
 
@@ -48,7 +59,10 @@ const ContentTab = () => {
                         </div>
 
                         <Label>Media Type</Label>
-                        <RadioGroup>
+                        <RadioGroup
+                            value={mediaType}
+                            onValueChange={(value) => setMediaType(value as 'video' | 'image')}
+                        >
                             <Label
                                 htmlFor="video"
                                 className="flex items-center space-x-2 cursor-pointer w-fit"
@@ -69,9 +83,10 @@ const ContentTab = () => {
                         <CldUploadWidget
                             signatureEndpoint="/api/sign-image"
                             options={{ sources: ['local', 'unsplash'], folder: 'horse' }}
-                            onSuccess={(res) =>
+                            onSuccess={(res, { widget }) => {
                                 setMediaUrl((res.info as CloudinaryUploadWidgetInfo).secure_url)
-                            }
+                                widget.close()
+                            }}
                         >
                             {({ open }) => {
                                 return (
@@ -85,7 +100,55 @@ const ContentTab = () => {
                                 )
                             }}
                         </CldUploadWidget>
+
+                        {mediaUrl && mediaType === 'image' && (
+                            <div className="flex justify-center relative w-full h-96">
+                                <Image
+                                    fill
+                                    src={mediaUrl}
+                                    alt=""
+                                    className="object-contain rounded-sm"
+                                />
+                            </div>
+                        )}
+
+                        {mediaUrl && mediaType === 'video' && (
+                            <div className="w-full mx-auto">
+                                <CldVideoPlayer
+                                    width={960}
+                                    height={540}
+                                    className="rounded-sm"
+                                    src={mediaUrl}
+                                />
+                            </div>
+                        )}
+
+                        <Label
+                            htmlFor="isPublic"
+                            className="flex items-center space-x-2 text-sm font-medium leading-none cursor-pointer peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        >
+                            <Checkbox
+                                checked={isPublic}
+                                onCheckedChange={(e) => setIsPublic(e as boolean)}
+                                id="isPublic"
+                            />
+                            <p>Mark as public</p>
+                        </Label>
+
+                        <Alert variant={'default'} className="text-yellow-500">
+                            <TriangleAlert className="w-4 h-4 !text-yellow-500" />
+                            <AlertTitle>Warning</AlertTitle>
+                            <AlertDescription>
+                                Public posts will be visible to all users.
+                            </AlertDescription>
+                        </Alert>
                     </CardContent>
+
+                    <CardFooter>
+                        <Button className="w-full text-white" type="submit">
+                            Create Post
+                        </Button>
+                    </CardFooter>
                 </Card>
             </form>
         </>

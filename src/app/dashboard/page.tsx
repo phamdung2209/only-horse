@@ -1,6 +1,8 @@
 import BaseLayout from '~/components/base-layout'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs'
 import ContentTab from './content-tab'
+import StoreTab from './store-tab'
+import Analytics from './analytics-tab'
 
 const Dashboard = () => {
     console.log('render Dashboard')
@@ -22,8 +24,12 @@ const Dashboard = () => {
                 <TabsContent value="content">
                     <ContentTab />
                 </TabsContent>
-                <TabsContent value="store">Change your password here.</TabsContent>
-                <TabsContent value="analytics">Analytics</TabsContent>
+                <TabsContent value="store">
+                    <StoreTab />
+                </TabsContent>
+                <TabsContent value="analytics">
+                    <Analytics />
+                </TabsContent>
             </Tabs>
         </BaseLayout>
     )
