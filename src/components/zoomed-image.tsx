@@ -28,6 +28,7 @@ const ZoomedImage = ({ className, imgSrc }: { className?: string; imgSrc: string
                 style={{ transformOrigin: `${mousePosition.x}% ${mousePosition.y}%` }}
                 className="transition-transform duration-300 ease-in-out transform hover:scale-[2.5] cursor-pointer rounded-md select-none"
                 ref={imgRef}
+                sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
             />
         </div>
     )

@@ -1,19 +1,41 @@
+'use client'
+
 import Link from 'next/link'
-import { TProduct } from './suggested-products/suggested-product'
+import { Loader } from 'lucide-react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { Product } from '@prisma/client'
+
 import { Button, buttonVariants } from './ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
 import ZoomedImage from './zoomed-image'
 import config from '~/configs'
 import { cn } from '~/lib/utils'
 import UnderlineText from './decorators/underline-text'
+import { toggleProductArchiveAction } from '~/app/dashboard/actions'
+import { useToast } from './ui/use-toast'
 
-const ProductCard = ({
-    product,
-    adminView = false,
-}: {
-    product: TProduct
-    adminView?: boolean
-}) => {
+const ProductCard = ({ product, adminView = false }: { product: Product; adminView?: boolean }) => {
+    const { toast } = useToast()
+    const queryClient = useQueryClient()
+
+    const { mutate: toggleArchive, isPending } = useMutation({
+        mutationKey: ['toggleArchive'],
+        mutationFn: async () => await toggleProductArchiveAction(product.id),
+        onSuccess: (data) => {
+            queryClient.invalidateQueries({ queryKey: ['getProducts'] })
+            toast({
+                title: 'Oh yeah!',
+                description: data.message,
+            })
+        },
+        onError: (error) =>
+            toast({
+                title: 'Oops!',
+                description: error.message,
+                variant: 'destructive',
+            }),
+    })
+
     return (
         <Card className="flex flex-col">
             <CardHeader className="px-2 flex flex-row items-center justify-between space-y-0 pb-2">
@@ -30,8 +52,16 @@ const ProductCard = ({
                 <ZoomedImage imgSrc={product.image} />
                 <div className="flex justify-center mt-auto">
                     {adminView ? (
-                        <Button className="w-full" variant={'outline'}>
-                            Archive
+                        <Button
+                            className="w-full"
+                            variant={'outline'}
+                            onClick={() => toggleArchive()}
+                        >
+                            {isPending ? (
+                                <Loader className="w-6 h-6 animate-spin" />
+                            ) : (
+                                <span>{product.isArchived ? 'Unarchive' : 'Archive'}</span>
+                            )}
                         </Button>
                     ) : (
                         <Button asChild>

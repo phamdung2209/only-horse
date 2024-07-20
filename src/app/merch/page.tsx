@@ -1,9 +1,19 @@
+import { Product } from '@prisma/client'
+import { use } from 'react'
+
 import BaseLayout from '~/components/base-layout'
 import UnderlineText from '~/components/decorators/underline-text'
 import ProductCard from '~/components/product-card'
-import { products } from '~/dummy_data/db'
+import prisma from '~/db/prisma'
 
 const Merch = () => {
+    const products: Product[] = use(
+        prisma.product.findMany({
+            where: { isArchived: false },
+            orderBy: { name: 'asc' },
+        }),
+    )
+
     return (
         <BaseLayout renderRightPanel={false}>
             <div className="px-3 md:px-10 my-10">

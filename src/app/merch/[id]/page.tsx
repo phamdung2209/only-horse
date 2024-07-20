@@ -1,14 +1,35 @@
+import { use } from 'react'
+import { notFound } from 'next/navigation'
+
 import BaseLayout from '~/components/base-layout'
 import UnderlineText from '~/components/decorators/underline-text'
 import ProductCard from '~/components/product-card'
-import { products } from '~/dummy_data/db'
 import ProductCheckout from './product-checkout'
+import prisma from '~/db/prisma'
 
 const Page = ({ params }: { params: { id: string } }) => {
+    const product = use(
+        prisma.product.findUnique({
+            where: { id: params.id },
+        }),
+    )
+
+    const products = use(
+        prisma.product.findMany({
+            where: {
+                isArchived: false,
+                id: { not: params.id },
+            },
+            orderBy: { name: 'asc' },
+        }),
+    )
+
+    if (!product || product.isArchived) return notFound()
+
     return (
         <BaseLayout renderRightPanel={false}>
             <div className="px-3 md:px-7 my-20">
-                <ProductCheckout product={products.find((p) => p.id === params.id)!} />
+                <ProductCheckout product={product!} />
 
                 <h1 className="text-3xl text-center mt-20 mb-10 font-bold tracking-tight">
                     More product from{' '}

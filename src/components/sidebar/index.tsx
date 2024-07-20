@@ -29,7 +29,8 @@ const Sidebar = () => {
                 <Avatar className="mt-4 cursor-pointer">
                     <AvatarImage
                         src={user?.picture ?? '/user-placeholder.png'}
-                        className="object-cover "
+                        className="object-cover"
+                        alt={user?.family_name!}
                     />
                     <AvatarFallback>CN</AvatarFallback>
                 </Avatar>

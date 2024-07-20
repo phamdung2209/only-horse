@@ -1,12 +1,12 @@
 import BaseLayout from '~/components/base-layout'
-import Upload from './upload'
+import UpdateProfileForm from './update-profile-form'
 
-const UpdateProfile = async () => {
+const Page = () => {
     return (
         <BaseLayout>
-            <Upload />
+            <UpdateProfileForm />
         </BaseLayout>
     )
 }
 
-export default UpdateProfile
+export default Page

@@ -15,7 +15,10 @@ const UserProfile = () => {
             <div className="flex flex-col p-4">
                 <div className="flex flex-col min-[450px]:flex-row gap-4 justify-between">
                     <Avatar className="w-20 h-20 border-2 -mt-10">
-                        <AvatarImage src={admin.image ?? '/user-placeholder.png'} />
+                        <AvatarImage
+                            src={admin.image ?? '/user-placeholder.png'}
+                            alt={admin.name}
+                        />
                         <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
 

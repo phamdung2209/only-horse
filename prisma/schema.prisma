@@ -91,7 +91,7 @@ model Product {
   id         String  @id @default(cuid())
   name       String
   image      String
-  price      Int
+  price      Float
   isArchived Boolean @default(false)
 
   orders Order[]

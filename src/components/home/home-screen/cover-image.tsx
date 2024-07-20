@@ -10,6 +10,7 @@ const CoverImage = () => {
                 alt="cover image"
                 className="h-full w-full object-cover select-none pointer-events-none"
                 fill
+                sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
             />
 
             <div

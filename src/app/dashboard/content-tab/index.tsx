@@ -1,6 +1,7 @@
 'use client'
 
-import { Terminal, TriangleAlert } from 'lucide-react'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { Loader, TriangleAlert } from 'lucide-react'
 import { CldUploadWidget, CldVideoPlayer, CloudinaryUploadWidgetInfo } from 'next-cloudinary'
 import Image from 'next/image'
 import { useState } from 'react'
@@ -20,6 +21,9 @@ import { Checkbox } from '~/components/ui/checkbox'
 import { Label } from '~/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '~/components/ui/radio-group'
 import { Textarea } from '~/components/ui/textarea'
+import { createPostAction } from '../actions'
+import { useToast } from '~/components/ui/use-toast'
+import { ToastAction } from '~/components/ui/toast'
 
 const ContentTab = () => {
     console.log('render ContentTab')
@@ -28,13 +32,47 @@ const ContentTab = () => {
     const [isPublic, setIsPublic] = useState<boolean>(false)
     const [mediaUrl, setMediaUrl] = useState<string>('')
 
+    const { toast } = useToast()
+
+    const { mutate: createPost, isPending } = useMutation({
+        mutationKey: ['createPost'],
+        mutationFn: async () =>
+            createPostAction({ text: textareaValue, mediaUrl, mediaType, isPublic }),
+        onSuccess: (data) => {
+            console.log({ data })
+            toast({
+                title: 'Post Created',
+                description: data.message,
+                color: 'green',
+            })
+
+            setTextareaValue('')
+            setMediaUrl('')
+            setIsPublic(false)
+        },
+        onError: (error) => {
+            console.error('Error in createPost mutation', error)
+            toast({
+                title: 'Uh oh! Something went wrong.',
+                description: error.message,
+                variant: 'destructive',
+                action: <ToastAction altText="Try again">Try again</ToastAction>,
+            })
+        },
+    })
+
     return (
         <>
             <p className="text-3xl my-5 font-bold text-center uppercase">
                 <UnderlineText className="decoration-wavy">Share</UnderlineText> Post
             </p>
 
-            <form action="">
+            <form
+                onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+                    e.preventDefault()
+                    createPost()
+                }}
+            >
                 <Card className="w-full max-w-md mx-auto">
                     <CardHeader>
                         <CardTitle className="text-2xl">New Post</CardTitle>
@@ -108,6 +146,7 @@ const ContentTab = () => {
                                     src={mediaUrl}
                                     alt=""
                                     className="object-contain rounded-sm"
+                                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
                                 />
                             </div>
                         )}
@@ -145,8 +184,12 @@ const ContentTab = () => {
                     </CardContent>
 
                     <CardFooter>
-                        <Button className="w-full text-white" type="submit">
-                            Create Post
+                        <Button className="w-full text-white" type="submit" disabled={isPending}>
+                            {isPending ? (
+                                <Loader className="w-6 h-6 animate-spin text-white" />
+                            ) : (
+                                'Create Post'
+                            )}
                         </Button>
                     </CardFooter>
                 </Card>

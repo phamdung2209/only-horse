@@ -49,7 +49,10 @@ const Post = ({
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                     <Avatar>
-                        <AvatarImage src={admin.image ?? '/user-placeholder.png'} />
+                        <AvatarImage
+                            src={admin.image ?? '/user-placeholder.png'}
+                            alt={admin.name}
+                        />
                         <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
 
@@ -76,7 +79,8 @@ const Post = ({
                             <Image
                                 src={post.mediaUrl}
                                 alt="Post Media"
-                                fill={true}
+                                fill
+                                sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
                                 className="rounded-lg object-cover"
                             />
                         </div>

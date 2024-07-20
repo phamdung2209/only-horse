@@ -6,6 +6,7 @@ import 'next-cloudinary/dist/cld-video-player.css'
 import { ThemeProvider } from '~/components/providers/theme-provider'
 import Footer from '~/components/footer'
 import TanStackProvider from '~/providers/tan-stack-provider'
+import { Toaster } from '~/components/ui/toaster'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -35,6 +36,8 @@ export default function RootLayout({
                         <Footer />
                     </main>
                 </ThemeProvider>
+
+                <Toaster />
             </body>
         </html>
     )

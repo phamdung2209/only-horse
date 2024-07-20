@@ -1,19 +1,13 @@
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
+import { Product } from '@prisma/client'
 import Link from 'next/link'
+
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
 import { cn } from '~/lib/utils'
 import { Button, buttonVariants } from '../ui/button'
 import config from '~/configs'
 import ZoomedImage from '../zoomed-image'
 
-export type TProduct = {
-    id: string
-    name: string
-    price: number
-    image: string
-    isArchived: boolean
-}
-
-const SuggestedProduct = ({ product }: { product: TProduct }) => {
+const SuggestedProduct = ({ product }: { product: Product }) => {
     return (
         <Card className="flex flex-col">
             <CardHeader className="px-2 flex flex-row items-center justify-between space-y-0 pb-0">

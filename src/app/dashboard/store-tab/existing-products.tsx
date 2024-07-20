@@ -1,11 +1,17 @@
+'use client'
+
+import { useQuery } from '@tanstack/react-query'
 import { X } from 'lucide-react'
 import ProductCard from '~/components/product-card'
 
 import ProductSkeleton from '~/components/skeletons/product-skeleton'
-import { products } from '~/dummy_data/db'
+import { getProductsAction } from '../actions'
 
 const ExistingProducts = () => {
-    const loading = false
+    const { data: products = [], isLoading: loading } = useQuery({
+        queryKey: ['getProducts'],
+        queryFn: async () => await getProductsAction(),
+    })
 
     return (
         <>

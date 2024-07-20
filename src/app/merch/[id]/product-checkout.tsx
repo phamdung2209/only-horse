@@ -1,8 +1,8 @@
 'use client'
 
+import { Product } from '@prisma/client'
 import { useState } from 'react'
 
-import { TProduct } from '~/components/suggested-products/suggested-product'
 import { Button } from '~/components/ui/button'
 import { Label } from '~/components/ui/label'
 import {
@@ -14,7 +14,7 @@ import {
 } from '~/components/ui/select'
 import ZoomedImage from '~/components/zoomed-image'
 
-const ProductCheckout = ({ product }: { product: TProduct }) => {
+const ProductCheckout = ({ product }: { product: Product }) => {
     const [selectedSize, setSelectedSize] = useState<string | null>(null)
 
     return (

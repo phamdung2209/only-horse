@@ -7,8 +7,8 @@ import { useFormState } from 'react-dom'
 
 import { Button } from '~/components/ui/button'
 import { storage } from '~/configs/firebase.config'
-import { uploadFile } from '~/lib/actions'
 import { blobFile, readFileAsDataURL } from '~/lib/utils'
+import { uploadFile } from './actions'
 
 const Upload = () => {
     const inputRef = useRef<HTMLInputElement | null>(null)
@@ -17,8 +17,8 @@ const Upload = () => {
 
     const handleSumit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        // if (!inputRef.current?.files?.length) return
-        // console.log('submit')
+        if (!inputRef.current?.files?.length) return
+        console.log('submit')
         // const file = inputRef.current?.files?.[0]
 
         // const uploadFile = uploadBytesResumable(ref(storage, 'images/' + file?.name), file!)
@@ -37,14 +37,23 @@ const Upload = () => {
     }
 
     console.log('url-----------', url)
-    const [errMsg, dispatch] = useFormState(() => {
-        console.log('submit')
+    const [errMsg, dispatch] = useFormState(async () => {
+        const file = inputRef.current?.files?.[0]
+        const base64 = await readFileAsDataURL(file!)
+        const upload = await uploadFile({
+            file: base64,
+            name: file!.name,
+        })
+        console.log('---------------->>>>', upload)
     }, null)
 
     return (
         <div>
             <input type="file" ref={inputRef} />
-            <form onSubmit={handleSumit} action={dispatch}>
+            <form
+                // onSubmit={handleSumit}
+                action={dispatch}
+            >
                 <Button type="submit">Upload</Button>
             </form>
             <h1>{progress}%</h1>
