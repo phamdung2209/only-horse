@@ -1,8 +1,32 @@
 import { Heart, Image as ImageIcon, Video } from 'lucide-react'
 import Image from 'next/image'
-import React from 'react'
+import React, { use } from 'react'
+
+import prisma from '~/db/prisma'
 
 const CoverImage = () => {
+    const imageCount = use(
+        prisma.post.count({
+            where: {
+                mediaType: 'image',
+            },
+        }),
+    )
+    const videoCount = use(
+        prisma.post.count({
+            where: {
+                mediaType: 'video',
+            },
+        }),
+    )
+    const heartCount = use(
+        prisma.post.aggregate({
+            _sum: {
+                likes: true,
+            },
+        }),
+    )
+
     return (
         <div className="h-44 overflow-hidden relative">
             <Image
@@ -25,19 +49,24 @@ const CoverImage = () => {
                         <div className="flex gap-2 items-center">
                             <div className="flex items-center gap-1">
                                 <ImageIcon className="w-4 h-4" />
-                                <span className="text-sm font-bold">45</span>
+                                <span className="text-sm font-bold">{imageCount}</span>
                             </div>
 
                             <span className="h-1 w-1 rounded-full bg-white" />
                             <div className="flex items-center gap-1">
                                 <Video className="w-4 h-4" />
-                                <span className="text-sm font-bold">67</span>
+                                <span className="text-sm font-bold">{videoCount}</span>
                             </div>
 
                             <span className="h-1 w-1 rounded-full bg-white" />
                             <div className="flex items-center gap-1">
                                 <Heart className="w-4 h-4" />
-                                <span className="text-sm font-bold">100M</span>
+                                <span className="text-sm font-bold">
+                                    {new Intl.NumberFormat('en-US', {
+                                        notation: 'compact',
+                                        compactDisplay: 'short',
+                                    }).format(heartCount._sum.likes ?? 0)}
+                                </span>
                             </div>
                         </div>
                     </div>

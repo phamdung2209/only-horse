@@ -2,8 +2,8 @@
 
 import { LoginLink, RegisterLink } from '@kinde-oss/kinde-auth-nextjs/components'
 import { memo, useState } from 'react'
-import Loading from '~/components/loading'
 
+import Loading from '~/components/loading'
 import { Button } from '~/components/ui/button'
 
 const AuthButton = () => {

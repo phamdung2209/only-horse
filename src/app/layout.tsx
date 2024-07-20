@@ -22,6 +22,22 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" suppressHydrationWarning>
+            <head>
+                <link rel="icon" href="/email-logo.png" />
+                <meta property="og:title" content="OnlyHorse built by DUNG_PHAM" />
+                <meta
+                    property="og:description"
+                    content="Only Horse is a platform for horses, not others."
+                />
+                <meta
+                    property="og:image"
+                    content="https://res.cloudinary.com/den0awox0/image/upload/v1721491580/horse/djzn4ejiatypvb88fyq7.png"
+                />
+                <meta property="og:url" content="https://horse.dungpv.id.vn" />
+                <meta property="og:site_name" content="DUNG_PHAM" />
+                <meta property="og:type" content="website" />
+            </head>
+
             <body className={inter.className}>
                 <ThemeProvider
                     attribute="class"

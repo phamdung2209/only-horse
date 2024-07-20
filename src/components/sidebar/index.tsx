@@ -16,25 +16,37 @@ import {
 } from '../ui/dropdown-menu'
 import LogoutButton from './logout-button'
 import NavLink from './nav-link'
+import { getUserAction } from '~/app/update-profile/actions'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip'
 
 const Sidebar = () => {
     const { getUser } = getKindeServerSession()
     const user = use(getUser())
+    const userProfile = use(getUserAction())
 
     const isAdmin: boolean = process.env.ADMIN_EMAIL === user?.email
 
     return (
         <div className="flex lg:w-1/5 flex-col gap-3 px-2 border-r sticky left-0 top-0 h-screen">
-            <Link href={config.routes.updateProfile} className="max-w-fit">
-                <Avatar className="mt-4 cursor-pointer">
-                    <AvatarImage
-                        src={user?.picture ?? '/user-placeholder.png'}
-                        className="object-cover"
-                        alt={user?.family_name!}
-                    />
-                    <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
-            </Link>
+            <TooltipProvider>
+                <Tooltip>
+                    <TooltipTrigger>
+                        <Link href={config.routes.updateProfile} className="max-w-fit">
+                            <Avatar className="mt-4 cursor-pointer">
+                                <AvatarImage
+                                    src={userProfile?.image!}
+                                    className="object-cover"
+                                    alt={user?.family_name!}
+                                />
+                                <AvatarFallback>CN</AvatarFallback>
+                            </Avatar>
+                        </Link>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                        {userProfile?.name ?? `${user?.family_name + ' ' + user?.given_name}`}
+                    </TooltipContent>
+                </Tooltip>
+            </TooltipProvider>
 
             <nav className="flex flex-col gap-3">
                 <NavLink isAdmin={isAdmin} />
