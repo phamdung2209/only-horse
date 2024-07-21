@@ -1,13 +1,28 @@
+import { memo, use } from 'react'
+import { notFound } from 'next/navigation'
+
 import BaseLayout from '~/components/base-layout'
 import UserProfile from './user-profile'
-import { memo } from 'react'
 import Posts from './posts'
+import prisma from '~/db/prisma'
+import { getUserAction } from '~/app/update-profile/actions'
 
 const HomeScreen = () => {
+    const admin = use(
+        prisma.user.findUnique({
+            where: {
+                email: process.env.ADMIN_EMAIL,
+            },
+        }),
+    )
+    const user = use(getUserAction())
+
+    if (!user) return notFound()
+
     return (
         <BaseLayout>
             <UserProfile />
-            <Posts />
+            <Posts admin={admin!} isSubscribed={user?.isSubscribed} />
         </BaseLayout>
     )
 }

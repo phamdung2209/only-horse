@@ -19,8 +19,8 @@ const SuggestedProducts = () => {
     )
 
     return (
-        <div className="lg:w-2/5 hidden lg:flex flex-col gap-3 px-2 static top-0 right-0 h-screen m;-3">
-            <div className="flex flex-col gap-2 mt-20">
+        <div className="lg:w-2/5 hidden lg:flex flex-col gap-3 px-2 sticky top-0 right-0 h-screen mt-20">
+            <div className="flex flex-col gap-2">
                 <p className="uppercase text-muted-foreground font-semibold tracking-tight">
                     Recommended for you
                 </p>
