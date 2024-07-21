@@ -1,4 +1,4 @@
-import { Home, LayoutDashboard, Shirt } from 'lucide-react'
+import { Home, Shirt } from 'lucide-react'
 import config from '~/configs'
 
 export type SidebarLink = typeof SIDEBAR_LINKS
