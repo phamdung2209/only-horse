@@ -1,9 +1,13 @@
 import { headers } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
+import { Resend } from 'resend'
 
 import prisma from '~/db/prisma'
 import { stripe } from '~/lib/stripe'
+import WelcomeEmail from '~/emails/welcome'
+
+const resend = new Resend(process.env.RESEND_API_KEY as string)
 
 const webhookSecret =
     process.env.NODE_ENV === 'development'
@@ -50,12 +54,11 @@ export const POST = async (req: NextRequest) => {
                     })
 
                     if (!user) throw new Error('User not found')
-                    if (!user.customerId) {
-                        await prisma.user.update({
-                            where: { id: user.id },
-                            data: { customerId },
-                        })
-                    }
+
+                    await prisma.user.update({
+                        where: { id: user.id },
+                        data: { customerId },
+                    })
 
                     for (const item of lineItems) {
                         const priceId = item.price?.id as string
@@ -72,7 +75,7 @@ export const POST = async (req: NextRequest) => {
                                 throw new Error('Invalid price ID')
                             }
 
-                            await prisma.subscription.upsert({
+                            const subscription = await prisma.subscription.upsert({
                                 where: { userId: user.id },
                                 update: {
                                     planId: priceId,
@@ -93,17 +96,52 @@ export const POST = async (req: NextRequest) => {
                                 where: { id: user.id },
                                 data: { isSubscribed: true },
                             })
+
+                            // TODO: Send email to user
+                            // resend => onboarding@resend.dev
+                            await resend.emails.send({
+                                from: 'Horse <onboarding@resend.dev>',
+                                to: [customerDetails.email],
+                                subject: 'Subscription Confirmation',
+                                react: WelcomeEmail({
+                                    userEmail: customerDetails.email,
+                                    userName: user.name,
+                                    subscriptionStartDate: subscription.startDate,
+                                    subscriptionEndDate: subscription.endDate,
+                                }),
+                            })
                         } else {
                             // Handle one-time purchases
+                            console.log('One-time purchase:', item)
                         }
                     }
                 }
+                break
+
+            case 'customer.subscription.deleted':
+                const subscription = await stripe.subscriptions.retrieve(
+                    (data.object as Stripe.Subscription).id,
+                )
+
+                const user = await prisma.user.findUnique({
+                    where: { customerId: subscription.customer as string },
+                })
+
+                if (!user) throw new Error('User not found for the subscription deleted event')
+
+                await prisma.user.update({
+                    where: { id: user.id },
+                    data: { isSubscribed: false },
+                })
+                break
+            default:
+                console.log(`Unhandled event type ${eventType}`)
                 break
         }
 
         return NextResponse.json({ received: true })
     } catch (error: any) {
         console.error('webhook error:', error.message)
-        return new Response(`Webhook error: ${error.message}`, { status: 400 })
+        return new Response(`Webhook error: ${error.message}`)
     }
 }
