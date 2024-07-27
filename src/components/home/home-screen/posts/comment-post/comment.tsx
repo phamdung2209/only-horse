@@ -1,11 +1,23 @@
 import { Prisma } from '@prisma/client'
+import { useEffect, useRef } from 'react'
+
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 
 type TCommentWithUser = Prisma.CommentGetPayload<{ include: { user: true } }>
 
 const Comment = ({ comment }: { comment: TCommentWithUser }) => {
+    const latestCommentRef = useRef<HTMLDivElement | null>(null)
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            latestCommentRef.current?.scrollIntoView({ behavior: 'smooth' })
+        }, 400)
+
+        return () => clearTimeout(timer)
+    }, [comment])
+
     return (
-        <div className="flex gap-2 border-b py-2">
+        <div className="flex gap-2 border-b py-2" ref={latestCommentRef}>
             <Avatar>
                 <AvatarImage src={comment.user.image!} alt="user image" />
                 <AvatarFallback>{comment.user.name[0]}</AvatarFallback>

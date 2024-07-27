@@ -5,27 +5,9 @@ import React, { use } from 'react'
 import prisma from '~/db/prisma'
 
 const CoverImage = () => {
-    const imageCount = use(
-        prisma.post.count({
-            where: {
-                mediaType: 'image',
-            },
-        }),
-    )
-    const videoCount = use(
-        prisma.post.count({
-            where: {
-                mediaType: 'video',
-            },
-        }),
-    )
-    const heartCount = use(
-        prisma.post.aggregate({
-            _sum: {
-                likes: true,
-            },
-        }),
-    )
+    const imageCount = use(prisma.post.count({ where: { mediaType: 'image' } }))
+    const videoCount = use(prisma.post.count({ where: { mediaType: 'video' } }))
+    const heartCount = use(prisma.post.aggregate({ _sum: { likes: true } }))
 
     return (
         <div className="h-44 overflow-hidden relative">

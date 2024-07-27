@@ -1,8 +1,8 @@
 import { use } from 'react'
+import { Product } from '@prisma/client'
 
 import SuggestedProduct from './suggested-product'
 import prisma from '~/db/prisma'
-import { Product } from '@prisma/client'
 
 const SuggestedProducts = () => {
     const products: Product[] = use(

@@ -18,6 +18,7 @@ export const getPostsAction = async () => {
                     where: { userId: user.id },
                 },
             },
+            orderBy: { createdAt: 'desc' },
         })
 
         return posts
@@ -44,11 +45,13 @@ export const deletePostAction = async (postId: string) => {
 
         if (post.userId !== user.id) throw new Error('You are not authorized to delete this post')
 
-        await prisma.post.delete({
-            where: {
-                id: postId,
-            },
-        })
+        await prisma.$transaction([
+            prisma.like.deleteMany({ where: { postId } }),
+            prisma.comment.deleteMany({ where: { postId } }),
+            prisma.post.delete({ where: { id: postId } }),
+        ])
+
+        revalidatePath('/')
 
         return { message: 'Oh no! Your post has been deleted.' }
     } catch (error: any) {

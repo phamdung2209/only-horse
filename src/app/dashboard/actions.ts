@@ -1,6 +1,7 @@
 'use server'
 
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
+import { revalidatePath } from 'next/cache'
 import prisma from '~/db/prisma'
 
 type TPostArgs = {
@@ -42,6 +43,8 @@ export const createPostAction = async ({ isPublic, mediaUrl, mediaType, text }: 
                 userId: user.id,
             },
         })
+
+        revalidatePath('/')
 
         return {
             message: 'Your post has been successfully created',

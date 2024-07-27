@@ -27,26 +27,27 @@ const Sidebar = () => {
     const isAdmin: boolean = process.env.ADMIN_EMAIL === user?.email
 
     return (
-        <div className="flex lg:w-1/5 flex-col gap-3 px-2 border-r sticky left-0 top-0 h-screen">
-            <TooltipProvider>
-                <Tooltip>
-                    <TooltipTrigger>
-                        <Link href={config.routes.updateProfile} className="max-w-fit">
-                            <Avatar className="mt-4 cursor-pointer">
+        <div className="flex lg:w-1/5 flex-col gap-3 px-2 border-r sticky left-0 top-0 h-screen z-10">
+            <Link href={config.routes.updateProfile} className="max-w-fit">
+                <Avatar className="mt-4 cursor-pointer">
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger>
                                 <AvatarImage
                                     src={userProfile?.image!}
                                     className="object-cover"
                                     alt={user?.family_name!}
                                 />
                                 <AvatarFallback>CN</AvatarFallback>
-                            </Avatar>
-                        </Link>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                        {userProfile?.name ?? `${user?.family_name + ' ' + user?.given_name}`}
-                    </TooltipContent>
-                </Tooltip>
-            </TooltipProvider>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                {userProfile?.name ??
+                                    `${user?.family_name + ' ' + user?.given_name}`}
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                </Avatar>
+            </Link>
 
             <nav className="flex flex-col gap-3">
                 <NavLink isAdmin={isAdmin} />
