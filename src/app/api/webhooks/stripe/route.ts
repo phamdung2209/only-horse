@@ -112,7 +112,30 @@ export const POST = async (req: NextRequest) => {
                             })
                         } else {
                             // Handle one-time purchases
-                            console.log('One-time purchase:', item)
+                            const { orderId, size } = session.metadata as {
+                                orderId: string
+                                size: string
+                            }
+                            const shippingDetails =
+                                session.shipping_details as Stripe.Checkout.Session.ShippingDetails
+
+                            const orderUpdated = await prisma.order.update({
+                                where: { id: orderId },
+                                data: {
+                                    isPaid: true,
+                                    shippingAddress: {
+                                        create: {
+                                            address: shippingDetails.address?.line1 ?? '',
+                                            city: shippingDetails.address?.city ?? '',
+                                            state: shippingDetails.address?.state ?? '',
+                                            zip: shippingDetails.address?.postal_code ?? '',
+                                            country: shippingDetails.address?.country ?? '',
+                                        },
+                                    },
+                                },
+                            })
+
+                            // Send a success email to the user
                         }
                     }
                 }

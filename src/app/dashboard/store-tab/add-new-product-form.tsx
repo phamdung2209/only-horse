@@ -135,7 +135,7 @@ const AddNewProductForm = () => {
                     <CardFooter className="flex flex-col">
                         <Button className="w-full text-white" type="submit" disabled={isPending}>
                             {isPending ? (
-                                <Loader className="w-6 h-6 animate-spin " />
+                                <Loader className="w-6 h-6 animate-spin" />
                             ) : (
                                 'Add Product'
                             )}

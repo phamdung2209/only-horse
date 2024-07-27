@@ -38,14 +38,14 @@ const Sidebar = () => {
                                     className="object-cover"
                                     alt={user?.family_name!}
                                 />
-                                <AvatarFallback>CN</AvatarFallback>
                             </TooltipTrigger>
-                            <TooltipContent>
+                            <TooltipContent className="text-xs">
                                 {userProfile?.name ??
                                     `${user?.family_name + ' ' + user?.given_name}`}
                             </TooltipContent>
                         </Tooltip>
                     </TooltipProvider>
+                    <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
             </Link>
 

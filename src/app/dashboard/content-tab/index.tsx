@@ -39,7 +39,6 @@ const ContentTab = () => {
         mutationFn: async () =>
             createPostAction({ text: textareaValue, mediaUrl, mediaType, isPublic }),
         onSuccess: (data) => {
-            console.log({ data })
             toast({
                 title: 'Post Created',
                 description: data.message,

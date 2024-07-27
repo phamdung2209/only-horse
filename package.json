@@ -6,7 +6,8 @@
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
-        "lint": "next lint"
+        "lint": "next lint",
+        "email": "email dev --dir src/emails"
     },
     "dependencies": {
         "@kinde-oss/kinde-auth-nextjs": "^2.3.1",
