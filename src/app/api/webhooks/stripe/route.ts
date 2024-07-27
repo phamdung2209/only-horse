@@ -6,6 +6,7 @@ import { Resend } from 'resend'
 import prisma from '~/db/prisma'
 import { stripe } from '~/lib/stripe'
 import WelcomeEmail from '~/emails/welcome'
+import ReceiptEmail from '~/emails/receipt-email'
 
 const resend = new Resend(process.env.RESEND_API_KEY as string)
 
@@ -133,9 +134,30 @@ export const POST = async (req: NextRequest) => {
                                         },
                                     },
                                 },
+                                select: {
+                                    id: true,
+                                    product: true,
+                                    size: true,
+                                    shippingAddress: true,
+                                    orderDate: true,
+                                },
                             })
 
                             // Send a success email to the user
+                            await resend.emails.send({
+                                from: 'Horse <onboarding@resend.dev>',
+                                to: [customerDetails.email],
+                                subject: 'Order Confirmation',
+                                react: ReceiptEmail({
+                                    orderDate: new Date(),
+                                    orderNumber: orderUpdated.id,
+                                    productName: orderUpdated.product.name,
+                                    productImage: orderUpdated.product.image,
+                                    productSize: orderUpdated.size,
+                                    shippingAddress: orderUpdated.shippingAddress!,
+                                    userName: user.name,
+                                }),
+                            })
                         }
                     }
                 }

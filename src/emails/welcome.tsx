@@ -12,6 +12,7 @@ import {
     Hr,
     Link,
 } from '@react-email/components'
+import config from '~/configs'
 
 const WelcomeEmail = ({
     userName = 'User',
@@ -24,8 +25,6 @@ const WelcomeEmail = ({
     subscriptionStartDate: Date
     subscriptionEndDate: Date
 }) => {
-    const BASE_URL = process.env.NODE_ENV === 'development' ? 'https://horse.local.com' : ''
-
     return (
         <Html>
             <Head />
@@ -34,8 +33,7 @@ const WelcomeEmail = ({
                 <Container style={container}>
                     <Section style={message}>
                         <Img
-                            // src={`${BASE_URL}/horse-1.png`}
-                            src={`https://firebasestorage.googleapis.com/v0/b/mystic-pact-405118.appspot.com/o/horse-1.png?alt=media&token=d3632ee8-1caa-4806-a36b-9d50bd279c73`}
+                            src={`/horse-1.png`}
                             width="600"
                             height="400"
                             alt="welcome icon"
@@ -68,7 +66,10 @@ const WelcomeEmail = ({
                         <Text style={{ ...global.text, marginTop: 24 }}>
                             Thanks for subscribing! We will see you in the platform. 🙂❤
                         </Text>
-                        <Link href={BASE_URL} style={{ ...global.button, margin: '10px auto' }}>
+                        <Link
+                            href={config.routes.home}
+                            style={{ ...global.button, margin: '10px auto' }}
+                        >
                             Visit OnlyHorse
                         </Link>
                     </Section>

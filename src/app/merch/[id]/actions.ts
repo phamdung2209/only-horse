@@ -43,7 +43,7 @@ export const createCheckoutAction = async ({
                             name: product?.name!,
                             images: [product?.image!],
                         },
-                        unit_amount: product?.price,
+                        unit_amount: product?.price * 100,
                     },
                     quantity: 1,
                 },

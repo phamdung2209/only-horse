@@ -16,12 +16,11 @@ const Page = ({ searchParams }: { searchParams: { orderId: string } }) => {
         <div className="min-h-screen flex flex-col items-center justify-center p-6">
             <div className="flex flex-col items-center">
                 <ZoomedImage imgSrc={product.image} className="h-96 w-96 rounded-md my-5" />
-                {order.isPaid && (
-                    <h1 className="text-2xl font-bold mb-4">
-                        Purchase <UnderlineText>Successful!</UnderlineText>
-                        🎉
-                    </h1>
-                )}
+
+                <h1 className="text-2xl font-bold mb-4">
+                    Purchase <UnderlineText>Successful!</UnderlineText>
+                    🎉
+                </h1>
                 <p className="text-center text-lg mb-6">
                     Your order is being processed and you will receive a comfirmation email shortly.
                     If you don't receive an email within 24 hours, please contact us with your order
