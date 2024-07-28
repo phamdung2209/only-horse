@@ -1,24 +1,29 @@
+import { use } from 'react'
+
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
+import { getDashboardDataAction } from '../actions'
 
 const RecentSubscriptions = () => {
-    const recentSubscriptions = [
-        {
-            user: {
-                name: 'John Doe',
-                email: 'john@email.com',
-                image: '',
-            },
-            price: 10_00,
-        },
-        {
-            user: {
-                name: 'Jane Doe',
-                email: 'jane@email.com',
-            },
-            price: 2001,
-        },
-    ]
+    // const recentSubscriptions = [
+    //     {
+    //         user: {
+    //             name: 'John Doe',
+    //             email: 'john@email.com',
+    //             image: '',
+    //         },
+    //         price: 10_00,
+    //     },
+    //     {
+    //         user: {
+    //             name: 'Jane Doe',
+    //             email: 'jane@email.com',
+    //         },
+    //         price: 2001,
+    //     },
+    // ]
+
+    const { recentSubscriptions } = use(getDashboardDataAction())
 
     return (
         <Card className="flex-1">
@@ -37,18 +42,20 @@ const RecentSubscriptions = () => {
                                 src={subscription.user.image || '/user-placeholder.png'}
                                 alt="Avatar"
                             />
-                            <AvatarFallback>CN</AvatarFallback>
+                            <AvatarFallback>
+                                {subscription.user.name[0].toUpperCase() ?? 'CN'}
+                            </AvatarFallback>
                         </Avatar>
                         <div className="grid gap-1">
-                            <p className="text-xs font-medium leading-none">
+                            <p className="text-xs font-medium leading-none truncate">
                                 {subscription.user.name}
                             </p>
-                            <p className="text-xs text-muted-foreground">
+                            <p className="text-xs text-muted-foreground truncate">
                                 {subscription.user.email}
                             </p>
                         </div>
-                        <div className="ml-auto font-medium text-sm">
-                            +
+                        <div className="ml-auto font-medium text-sm whitespace-nowrap">
+                            +{' '}
                             {new Intl.NumberFormat('en-US', {
                                 style: 'currency',
                                 currency: 'USD',

@@ -112,3 +112,71 @@ export const toggleProductArchiveAction = async (id: string) => {
         throw new Error(error.message)
     }
 }
+
+export const getDashboardDataAction = async () => {
+    try {
+        await checkIfAdmin()
+
+        const totalRevenuePromise = Promise.all([
+            prisma.order.aggregate({ _sum: { price: true } }),
+            prisma.subscription.aggregate({ _sum: { price: true } }),
+        ])
+
+        const totalSalesPromise = prisma.order.count()
+        const totalSubscriptionsPromise = prisma.subscription.count()
+
+        const recentSalesPromise = prisma.order.findMany({
+            take: 4,
+            orderBy: { orderDate: 'desc' },
+            select: {
+                user: { select: { name: true, email: true, image: true } },
+                price: true,
+                orderDate: true,
+            },
+        })
+
+        const recentSubscriptionsPromise = prisma.subscription.findMany({
+            take: 4,
+            orderBy: { startDate: 'desc' },
+            select: {
+                user: { select: { name: true, email: true, image: true } },
+                price: true,
+                startDate: true,
+            },
+        })
+
+        const [
+            totalRevenueResult,
+            totalSalesResult,
+            totalSubscriptionsResult,
+            recentSalesResult,
+            recentSubscriptionsResult,
+        ] = await Promise.all([
+            totalRevenuePromise,
+            totalSalesPromise,
+            totalSubscriptionsPromise,
+            recentSalesPromise,
+            recentSubscriptionsPromise,
+        ])
+
+        const totalRevenue =
+            (totalRevenueResult[0]._sum.price ?? 0) + (totalRevenueResult[1]._sum.price ?? 0)
+
+        return {
+            totalRevenue,
+            totalSales: totalSalesResult,
+            totalSubscriptions: totalSubscriptionsResult,
+            recentSales: recentSalesResult,
+            recentSubscriptions: recentSubscriptionsResult,
+        }
+    } catch (error: any) {
+        console.error('Error in getDashboardDataAction(action.ts)', error.message)
+        return {
+            totalRevenue: 0,
+            totalSales: 0,
+            totalSubscriptions: 0,
+            recentSales: [],
+            recentSubscriptions: [],
+        }
+    }
+}

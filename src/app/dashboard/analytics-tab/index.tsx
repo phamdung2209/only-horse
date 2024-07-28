@@ -1,9 +1,14 @@
 import { CreditCard, DollarSign, Users } from 'lucide-react'
+import { use } from 'react'
+
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
 import RecentSubscriptions from './recent-subscriptions'
 import RecentSales from './recent-sales'
+import { getDashboardDataAction } from '../actions'
 
 const Analytics = () => {
+    const { totalRevenue, totalSales, totalSubscriptions } = use(getDashboardDataAction())
+
     return (
         <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-5">
@@ -18,7 +23,7 @@ const Analytics = () => {
                             {new Intl.NumberFormat('en-US', {
                                 style: 'currency',
                                 currency: 'USD',
-                            }).format(23445)}
+                            }).format(totalRevenue)}
                         </div>
                         <p className="text-xs text-muted-foreground">+20.1% from last month</p>
                     </CardContent>
@@ -31,7 +36,7 @@ const Analytics = () => {
                     </CardHeader>
 
                     <CardContent>
-                        <div className="text-2xl font-bold">+574</div>
+                        <div className="text-2xl font-bold">+{totalSales}</div>
                         <p className="text-xs text-muted-foreground">+20.1% from last month</p>
                     </CardContent>
                 </Card>
@@ -43,7 +48,7 @@ const Analytics = () => {
                     </CardHeader>
 
                     <CardContent>
-                        <div className="text-2xl font-bold">+123</div>
+                        <div className="text-2xl font-bold">+{totalSubscriptions}</div>
                         <p className="text-xs text-muted-foreground">+20.1% from last month</p>
                     </CardContent>
                 </Card>

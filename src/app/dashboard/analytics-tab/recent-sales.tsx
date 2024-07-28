@@ -1,25 +1,29 @@
+import { use } from 'react'
+
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
+import { getDashboardDataAction } from '../actions'
 
 const RecentSales = () => {
-    const recentSales = [
-        {
-            user: {
-                name: 'John Doe',
-                email: 'john@email.com',
-                image: '',
-            },
-            price: 10_00,
-        },
-        {
-            user: {
-                name: 'Jane Doe',
-                email: 'jane@email.com',
-                image: '',
-            },
-            price: 200_0 + 1,
-        },
-    ]
+    // const recentSales = [
+    //     {
+    //         user: {
+    //             name: 'John Doe',
+    //             email: 'john@email.com',
+    //             image: '',
+    //         },
+    //         price: 10_00,
+    //     },
+    //     {
+    //         user: {
+    //             name: 'Jane Doe',
+    //             email: 'jane@email.com',
+    //             image: '',
+    //         },
+    //         price: 200_0 + 1,
+    //     },
+    // ]
+    const { recentSales } = use(getDashboardDataAction())
 
     return (
         <Card className="flex-1">
