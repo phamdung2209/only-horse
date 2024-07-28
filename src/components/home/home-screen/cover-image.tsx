@@ -1,6 +1,6 @@
+import React, { memo, use } from 'react'
 import { Heart, Image as ImageIcon, Video } from 'lucide-react'
 import Image from 'next/image'
-import React, { use } from 'react'
 
 import prisma from '~/db/prisma'
 
@@ -58,4 +58,4 @@ const CoverImage = ({ adminName }: { adminName?: string }) => {
     )
 }
 
-export default CoverImage
+export default memo(CoverImage)

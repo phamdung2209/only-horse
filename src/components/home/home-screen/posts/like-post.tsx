@@ -1,6 +1,6 @@
 'use client'
 
-import { memo, useLayoutEffect, useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import { Heart } from 'lucide-react'
 import { useMutation } from '@tanstack/react-query'
 import { useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs'
@@ -66,4 +66,4 @@ const LikePost = ({
     )
 }
 
-export default memo(LikePost)
+export default LikePost

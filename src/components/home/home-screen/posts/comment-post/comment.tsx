@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client'
-import { useEffect, useRef } from 'react'
+import { memo, useEffect, useRef } from 'react'
 
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 
@@ -20,7 +20,7 @@ const Comment = ({ comment }: { comment: TCommentWithUser }) => {
         <div className="flex gap-2 border-b py-2" ref={latestCommentRef}>
             <Avatar>
                 <AvatarImage src={comment.user.image!} alt="user image" />
-                <AvatarFallback>{comment.user.name[0]}</AvatarFallback>
+                <AvatarFallback>{comment.user.name[0] ?? 'CN'}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col w-full gap-1">
                 <div className="flex justify-between items-center">
@@ -43,4 +43,4 @@ const Comment = ({ comment }: { comment: TCommentWithUser }) => {
     )
 }
 
-export default Comment
+export default memo(Comment)

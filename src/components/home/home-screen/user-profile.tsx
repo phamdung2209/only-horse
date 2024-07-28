@@ -1,24 +1,13 @@
-import { use } from 'react'
 import Link from 'next/link'
+import { User } from '@prisma/client'
 
 import CoverImage from './cover-image'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Button } from '~/components/ui/button'
 import config from '~/configs'
 import Separate from '~/components/decorators/separate'
-import prisma from '~/db/prisma'
-import { getUserAction } from '~/app/update-profile/actions'
 
-const UserProfile = () => {
-    const admin = use(
-        prisma.user.findUnique({
-            where: {
-                email: process.env.ADMIN_EMAIL,
-            },
-        }),
-    )
-    const user = use(getUserAction())
-
+const UserProfile = ({ admin, user }: { admin: User; user: User }) => {
     return (
         <div className="flex flex-col">
             <CoverImage adminName={admin?.name} />

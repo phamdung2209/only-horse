@@ -1,8 +1,8 @@
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
-import { use } from 'react'
+import { lazy, use } from 'react'
 
-import AuthScreen from '~/components/home/auth-screen'
-import HomeScreen from '~/components/home/home-screen'
+const AuthScreen = lazy(() => import('~/components/home/auth-screen'))
+const HomeScreen = lazy(() => import('~/components/home/home-screen'))
 
 export default function Home() {
     const { getUser } = getKindeServerSession()

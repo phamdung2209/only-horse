@@ -1,5 +1,5 @@
-import { User } from '@prisma/client'
 import { use } from 'react'
+import { User } from '@prisma/client'
 
 import UnderlineText from '~/components/decorators/underline-text'
 import Post from './post'

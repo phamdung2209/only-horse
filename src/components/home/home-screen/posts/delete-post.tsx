@@ -1,5 +1,6 @@
 'use client'
 
+import { memo } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { Loader, Trash } from 'lucide-react'
 
@@ -34,4 +35,4 @@ const DeletePost = ({ postId }: { postId: string }) => {
     )
 }
 
-export default DeletePost
+export default memo(DeletePost)

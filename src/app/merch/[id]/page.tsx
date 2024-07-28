@@ -8,18 +8,11 @@ import ProductCheckout from './product-checkout'
 import prisma from '~/db/prisma'
 
 const Page = ({ params }: { params: { id: string } }) => {
-    const product = use(
-        prisma.product.findUnique({
-            where: { id: params.id },
-        }),
-    )
+    const product = use(prisma.product.findUnique({ where: { id: params.id } }))
 
     const products = use(
         prisma.product.findMany({
-            where: {
-                isArchived: false,
-                id: { not: params.id },
-            },
+            where: { isArchived: false, id: { not: params.id } },
             orderBy: { name: 'asc' },
         }),
     )
