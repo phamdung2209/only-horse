@@ -78,7 +78,7 @@ model Subscription {
   id        String   @id @default(cuid())
   userId    String   @unique
   planId    String
-  price     Int      @default(0)
+  price     Float    @default(0)
   startDate DateTime @default(now())
   endDate   DateTime
 
@@ -101,7 +101,7 @@ model Order {
   id                String   @id @default(cuid())
   userId            String
   productId         String
-  price             Int
+  price             Float
   isPaid            Boolean  @default(false)
   size              String
   orderDate         DateTime @default(now())
