@@ -25,6 +25,8 @@ const WelcomeEmail = ({
     subscriptionStartDate: Date
     subscriptionEndDate: Date
 }) => {
+    const BASE_URL = config.baseUrl
+
     return (
         <Html>
             <Head />
@@ -33,7 +35,7 @@ const WelcomeEmail = ({
                 <Container style={container}>
                     <Section style={message}>
                         <Img
-                            src={`/horse-1.png`}
+                            src={`${BASE_URL}/horse-1.png`}
                             width="600"
                             height="400"
                             alt="welcome icon"
@@ -67,7 +69,7 @@ const WelcomeEmail = ({
                             Thanks for subscribing! We will see you in the platform. 🙂❤
                         </Text>
                         <Link
-                            href={config.routes.home}
+                            href={BASE_URL + config.routes.home}
                             style={{ ...global.button, margin: '10px auto' }}
                         >
                             Visit OnlyHorse

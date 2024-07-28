@@ -11,8 +11,9 @@ import { Toaster } from '~/components/ui/toaster'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-    title: 'Only Horse',
-    description: 'Only Horse is a platform for horses, not others.',
+    title: 'Only Horse, E-commerce for horses',
+    description:
+        'Only Horse is a platform for horse lovers which includes a wide of exclusive content and merchandise.',
 }
 
 export default function RootLayout({
@@ -23,11 +24,10 @@ export default function RootLayout({
     return (
         <html lang="en" suppressHydrationWarning>
             <head>
-                <link rel="icon" href="/email-logo.png" />
                 <meta property="og:title" content="OnlyHorse built by DUNG_PHAM" />
                 <meta
                     property="og:description"
-                    content="Only Horse is a platform for horses, not others."
+                    content="Only Horse is a platform for horse lovers which includes a wide of exclusive content and merchandise."
                 />
                 <meta
                     property="og:image"

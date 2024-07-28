@@ -14,6 +14,9 @@ import {
     Text,
 } from '@react-email/components'
 import * as React from 'react'
+import config from '~/configs'
+
+const BASE_URL = config.baseUrl
 
 export const ReceiptEmail = ({
     userName,
@@ -48,7 +51,7 @@ export const ReceiptEmail = ({
                 <Hr style={global.hr} />
                 <Section style={message}>
                     <Img
-                        src={`/email-logo.png`}
+                        src={`${BASE_URL}/email-logo.png`}
                         width="120"
                         height="80"
                         alt="Nike"

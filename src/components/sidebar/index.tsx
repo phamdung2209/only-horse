@@ -63,7 +63,13 @@ const Sidebar = () => {
                     <DropdownMenuContent>
                         <DropdownMenuLabel>My Account</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <Link href={'#'}>
+                        <Link
+                            href={
+                                (config.stripe.billingPortal as string) +
+                                `?prefilled_email=${user?.email}`
+                            }
+                            target="_blank"
+                        >
                             <DropdownMenuItem className="cursor-pointer">Billing</DropdownMenuItem>
                         </Link>
                         <LogoutButton />
