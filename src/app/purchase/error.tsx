@@ -30,7 +30,7 @@ export default function Error({
             </p>
             <div className="flex flex-col items-center gap-2">
                 <Button
-                    className="text-white flex items-center gap-2"
+                    className="flex items-center gap-2"
                     variant={'outline'}
                     onClick={() => {
                         setIsRefreshed(true)

@@ -21,7 +21,7 @@ const UserProfile = () => {
 
     return (
         <div className="flex flex-col">
-            <CoverImage />
+            <CoverImage adminName={admin?.name} />
 
             <div className="flex flex-col p-4">
                 <div className="flex flex-col min-[450px]:flex-row gap-4 justify-between">

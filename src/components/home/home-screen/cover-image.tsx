@@ -4,7 +4,7 @@ import React, { use } from 'react'
 
 import prisma from '~/db/prisma'
 
-const CoverImage = () => {
+const CoverImage = ({ adminName }: { adminName?: string }) => {
     const imageCount = use(prisma.post.count({ where: { mediaType: 'image' } }))
     const videoCount = use(prisma.post.count({ where: { mediaType: 'video' } }))
     const heartCount = use(prisma.post.aggregate({ _sum: { likes: true } }))
@@ -27,7 +27,7 @@ const CoverImage = () => {
             <div className="flex justify-between items-center absolute inset-[0_auto_auto_0] px-2 py-1 z-20 w-full">
                 <div className="flex items-center gap-2">
                     <div className="flex flex-col text-white">
-                        <p className="font-bold">Dung Pham</p>
+                        <p className="font-bold">{adminName}</p>
                         <div className="flex gap-2 items-center">
                             <div className="flex items-center gap-1">
                                 <ImageIcon className="w-4 h-4" />
