@@ -179,6 +179,22 @@ export const POST = async (req: NextRequest) => {
                     data: { isSubscribed: false },
                 })
                 break
+
+            case 'checkout.session.expired':
+                const sessionExpired = await stripe.checkout.sessions.retrieve(
+                    (data.object as Stripe.Checkout.Session).id,
+                )
+
+                await prisma.$transaction([
+                    prisma.order.delete({
+                        where: { id: sessionExpired.metadata!.orderId as string },
+                    }),
+                    prisma.user.update({
+                        where: { customerId: sessionExpired.customer as string },
+                        data: { isSubscribed: false },
+                    }),
+                ])
+                break
             default:
                 console.log(`Unhandled event type ${eventType}`)
                 break
