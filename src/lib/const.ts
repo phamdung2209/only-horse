@@ -1,17 +1,17 @@
 import { CreditCard, DollarSign, Home, Shirt, Users } from 'lucide-react'
-import dynamic from 'next/dynamic'
+import { lazy } from 'react'
 
-// const Analytics = lazy(() => import('~/app/dashboard/analytics-tab'))
-// const ContentTab = lazy(() => import('~/app/dashboard/content-tab'))
-// const StoreTab = lazy(() => import('~/app/dashboard/store-tab'))
+const Analytics = lazy(() => import('~/app/dashboard/analytics-tab'))
+const ContentTab = lazy(() => import('~/app/dashboard/content-tab'))
+const StoreTab = lazy(() => import('~/app/dashboard/store-tab'))
 
 // import Analytics from '~/app/dashboard/analytics-tab'
 // import ContentTab from '~/app/dashboard/content-tab'
 // import StoreTab from '~/app/dashboard/store-tab'
 
-const Analytics = dynamic(() => import('~/app/dashboard/analytics-tab'))
-const ContentTab = dynamic(() => import('~/app/dashboard/content-tab'))
-const StoreTab = dynamic(() => import('~/app/dashboard/store-tab'))
+// const Analytics = dynamic(() => import('~/app/dashboard/analytics-tab'))
+// const ContentTab = dynamic(() => import('~/app/dashboard/content-tab'))
+// const StoreTab = dynamic(() => import('~/app/dashboard/store-tab'))
 
 import config from '~/configs'
 
