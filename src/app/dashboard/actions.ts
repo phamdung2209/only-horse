@@ -117,6 +117,8 @@ export const toggleProductArchiveAction = async (id: string) => {
 export const getDashboardDataAction = async () => {
     try {
         await checkIfAdmin()
+        // await 5s delay
+        // await new Promise((resolve) => setTimeout(resolve, 5000))
 
         // Combine total revenue queries into a single request
         const totalRevenuePromise = prisma.$transaction([

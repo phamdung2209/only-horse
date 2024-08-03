@@ -5,24 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
 import { getDashboardDataAction } from '../actions'
 
 const RecentSales = () => {
-    // const recentSales = [
-    //     {
-    //         user: {
-    //             name: 'John Doe',
-    //             email: 'john@email.com',
-    //             image: '',
-    //         },
-    //         price: 10_00,
-    //     },
-    //     {
-    //         user: {
-    //             name: 'Jane Doe',
-    //             email: 'jane@email.com',
-    //             image: '',
-    //         },
-    //         price: 200_0 + 1,
-    //     },
-    // ]
     const { recentSales } = use(getDashboardDataAction())
 
     return (
@@ -34,8 +16,8 @@ const RecentSales = () => {
                 {recentSales.length === 0 && (
                     <p className="text-sm text-muted-foreground">No recent sales</p>
                 )}
-                {recentSales.map((order) => (
-                    <div className="flex items-center gap-2" key={order.user.email}>
+                {recentSales.map((order, idx) => (
+                    <div className="flex items-center gap-2" key={idx}>
                         <Avatar className="hidden h-9 w-9 sm:flex">
                             <AvatarImage
                                 src={order.user.image || '/user-placeholder.png'}
@@ -46,8 +28,12 @@ const RecentSales = () => {
                             </AvatarFallback>
                         </Avatar>
                         <div className="grid gap-1">
-                            <p className="text-xs font-medium leading-none">{order.user.name}</p>
-                            <p className="text-xs text-muted-foreground">{order.user.email}</p>
+                            <p className="text-xs font-medium leading-none truncate">
+                                {order.user.name}
+                            </p>
+                            <p className="text-xs text-muted-foreground truncate">
+                                {order.user.email}
+                            </p>
                         </div>
                         <div className="ml-auto font-medium text-sm">
                             {new Intl.NumberFormat('en-US', {

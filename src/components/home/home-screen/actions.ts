@@ -6,7 +6,10 @@ import prisma from '~/db/prisma'
 
 export const getAdminAction = async () => {
     try {
-        const admin = await prisma.user.findUnique({ where: { email: process.env.ADMIN_EMAIL! } })
+        const admin = await prisma.user.findUnique({
+            where: { email: process.env.ADMIN_EMAIL ?? 'phamdung.22092003@gmail.com' },
+        })
+
         return admin
     } catch (error: any) {
         console.error('Error in getAdminAction: ', error.message)

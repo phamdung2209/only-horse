@@ -2,17 +2,17 @@ import { Loader } from 'lucide-react'
 import Link from 'next/link'
 
 import { Tabs, TabsList, TabsTrigger } from '~/components/ui/tabs'
-import { TABS_DASHBOARD } from '~/lib/const'
+import { TABS_DASHBOARD_SKELETON } from '~/lib/const'
 
 const Loading = () => {
     return (
         <>
             <Tabs
-                defaultValue={TABS_DASHBOARD[0].id}
+                defaultValue={TABS_DASHBOARD_SKELETON[0].id}
                 className="w-full mx-auto my-10 px-2 md:px-10"
             >
                 <TabsList className="flex flex-col sm:flex-row w-full mx-auto h-auto">
-                    {TABS_DASHBOARD.map((tab) => (
+                    {TABS_DASHBOARD_SKELETON.map((tab) => (
                         <Link href={`?tab=${tab.id}`} key={tab.id} className="w-full">
                             <TabsTrigger value={tab.id} className="w-full">
                                 {tab.label}

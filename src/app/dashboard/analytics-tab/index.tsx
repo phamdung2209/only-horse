@@ -13,8 +13,8 @@ const Analytics = () => {
     return (
         <Suspense fallback={<AnalyticsSkeleton />}>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-5">
-                {ANALYTICS_ITEMS.map((item) => (
-                    <Card key={item.id}>
+                {ANALYTICS_ITEMS.map((item, idx) => (
+                    <Card key={idx}>
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm font-medium">{item.label}</CardTitle>
                             <item.icon className="h-4 w-4 text-muted-foreground" />
@@ -37,7 +37,7 @@ const Analytics = () => {
                 ))}
             </div>
 
-            <div className="flex flex-wrap gap-5 my-5`">
+            <div className="gap-5 grid grid-cols-1 md:grid-cols-2">
                 <RecentSubscriptions />
                 <RecentSales />
             </div>

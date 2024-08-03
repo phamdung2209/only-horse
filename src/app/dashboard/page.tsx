@@ -21,7 +21,7 @@ const Dashboard = ({
 
             {TABS_DASHBOARD.map((tab) => (
                 <TabsContent key={tab.id} value={tab.id}>
-                    <tab.component />
+                    {tab.component && <tab.component />}
                 </TabsContent>
             ))}
         </Tabs>

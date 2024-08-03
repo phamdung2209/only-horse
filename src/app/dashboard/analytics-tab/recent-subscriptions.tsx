@@ -5,24 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
 import { getDashboardDataAction } from '../actions'
 
 const RecentSubscriptions = () => {
-    // const recentSubscriptions = [
-    //     {
-    //         user: {
-    //             name: 'John Doe',
-    //             email: 'john@email.com',
-    //             image: '',
-    //         },
-    //         price: 10_00,
-    //     },
-    //     {
-    //         user: {
-    //             name: 'Jane Doe',
-    //             email: 'jane@email.com',
-    //         },
-    //         price: 2001,
-    //     },
-    // ]
-
     const { recentSubscriptions } = use(getDashboardDataAction())
 
     return (
