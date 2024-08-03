@@ -1,4 +1,4 @@
-import { Home, Shirt } from 'lucide-react'
+import { CreditCard, DollarSign, Home, Shirt, Users } from 'lucide-react'
 
 import Analytics from '~/app/dashboard/analytics-tab'
 import ContentTab from '~/app/dashboard/content-tab'
@@ -6,6 +6,11 @@ import StoreTab from '~/app/dashboard/store-tab'
 import config from '~/configs'
 
 export type SidebarLink = typeof SIDEBAR_LINKS
+export type TTabs_Dashboard = {
+    id: string
+    label: string
+    component: React.ComponentType
+}
 
 export const SIDEBAR_LINKS = [
     {
@@ -20,7 +25,7 @@ export const SIDEBAR_LINKS = [
     },
 ]
 
-export const TABS_DASHBOARD = [
+export const TABS_DASHBOARD: TTabs_Dashboard[] = [
     {
         id: 'content',
         label: 'Content',
@@ -35,5 +40,23 @@ export const TABS_DASHBOARD = [
         id: 'analytics',
         label: 'Analytics',
         component: Analytics,
+    },
+]
+
+export const ANALYTICS_ITEMS = [
+    {
+        id: 'totalRevenue',
+        label: 'Total Revenue',
+        icon: DollarSign,
+    },
+    {
+        id: 'totalSales',
+        label: 'Sales',
+        icon: CreditCard,
+    },
+    {
+        id: 'totalSubscriptions',
+        label: 'Subscriptions',
+        icon: Users,
     },
 ]

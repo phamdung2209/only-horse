@@ -12,12 +12,15 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu'
+import { Skeleton } from '~/components/ui/skeleton'
 
 const SidebarSkeleton = () => {
     return (
         <div className="flex lg:w-1/5 flex-col gap-3 px-2 border-r sticky left-0 top-0 h-screen z-10">
             <Avatar className="mt-4 cursor-pointer">
-                <AvatarFallback>CN</AvatarFallback>
+                <AvatarFallback>
+                    <Skeleton className="w-full h-full" />
+                </AvatarFallback>
             </Avatar>
 
             <nav className="flex flex-col gap-3">

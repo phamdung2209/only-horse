@@ -118,14 +118,19 @@ export const getDashboardDataAction = async () => {
     try {
         await checkIfAdmin()
 
-        const totalRevenuePromise = Promise.all([
+        // Combine total revenue queries into a single request
+        const totalRevenuePromise = prisma.$transaction([
             prisma.order.aggregate({ _sum: { price: true } }),
             prisma.subscription.aggregate({ _sum: { price: true } }),
         ])
 
-        const totalSalesPromise = prisma.order.count()
-        const totalSubscriptionsPromise = prisma.subscription.count()
+        // Combine the count queries into a single transaction
+        const countsPromise = prisma.$transaction([
+            prisma.order.count(),
+            prisma.subscription.count(),
+        ])
 
+        // Fetch recent sales and subscriptions in parallel
         const recentSalesPromise = prisma.order.findMany({
             take: 4,
             orderBy: { orderDate: 'desc' },
@@ -146,29 +151,28 @@ export const getDashboardDataAction = async () => {
             },
         })
 
+        // Await all promises in parallel
         const [
-            totalRevenueResult,
-            totalSalesResult,
-            totalSubscriptionsResult,
-            recentSalesResult,
-            recentSubscriptionsResult,
+            [totalOrderRevenue, totalSubscriptionRevenue],
+            [totalSales, totalSubscriptions],
+            recentSales,
+            recentSubscriptions,
         ] = await Promise.all([
             totalRevenuePromise,
-            totalSalesPromise,
-            totalSubscriptionsPromise,
+            countsPromise,
             recentSalesPromise,
             recentSubscriptionsPromise,
         ])
 
         const totalRevenue =
-            (totalRevenueResult[0]._sum.price ?? 0) + (totalRevenueResult[1]._sum.price ?? 0)
+            (totalOrderRevenue._sum.price ?? 0) + (totalSubscriptionRevenue._sum.price ?? 0)
 
         return {
             totalRevenue,
-            totalSales: totalSalesResult,
-            totalSubscriptions: totalSubscriptionsResult,
-            recentSales: recentSalesResult,
-            recentSubscriptions: recentSubscriptionsResult,
+            totalSales,
+            totalSubscriptions,
+            recentSales,
+            recentSubscriptions,
         }
     } catch (error: any) {
         console.error('Error in getDashboardDataAction(action.ts)', error.message)

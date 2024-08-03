@@ -1,64 +1,47 @@
-import { CreditCard, DollarSign, Users } from 'lucide-react'
-import { use } from 'react'
+import { Suspense, use } from 'react'
 
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
 import RecentSubscriptions from './recent-subscriptions'
 import RecentSales from './recent-sales'
 import { getDashboardDataAction } from '../actions'
+import { ANALYTICS_ITEMS } from '~/lib/const'
+import AnalyticsSkeleton from '~/components/skeletons/dashboard/analytics-skeleton'
 
 const Analytics = () => {
     const { totalRevenue, totalSales, totalSubscriptions } = use(getDashboardDataAction())
 
     return (
-        <>
+        <Suspense fallback={<AnalyticsSkeleton />}>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-5">
-                <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
-                        <DollarSign className="h-4 w-4 text-muted-foreground" />
-                    </CardHeader>
+                {ANALYTICS_ITEMS.map((item) => (
+                    <Card key={item.id}>
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                            <CardTitle className="text-sm font-medium">{item.label}</CardTitle>
+                            <item.icon className="h-4 w-4 text-muted-foreground" />
+                        </CardHeader>
 
-                    <CardContent>
-                        <div className="text-2xl font-bold">
-                            {new Intl.NumberFormat('en-US', {
-                                style: 'currency',
-                                currency: 'USD',
-                            }).format(totalRevenue)}
-                        </div>
-                        <p className="text-xs text-muted-foreground">+20.1% from last month</p>
-                    </CardContent>
-                </Card>
-
-                <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">Sales</CardTitle>
-                        <CreditCard className="h-4 w-4 text-muted-foreground" />
-                    </CardHeader>
-
-                    <CardContent>
-                        <div className="text-2xl font-bold">+{totalSales}</div>
-                        <p className="text-xs text-muted-foreground">+20.1% from last month</p>
-                    </CardContent>
-                </Card>
-
-                <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">Subscriptions</CardTitle>
-                        <Users className="h-4 w-4 text-muted-foreground" />
-                    </CardHeader>
-
-                    <CardContent>
-                        <div className="text-2xl font-bold">+{totalSubscriptions}</div>
-                        <p className="text-xs text-muted-foreground">+20.1% from last month</p>
-                    </CardContent>
-                </Card>
+                        <CardContent className="flex flex-col gap-2">
+                            <div className="text-2xl font-bold">
+                                {item.id === 'totalRevenue'
+                                    ? new Intl.NumberFormat('en-US', {
+                                          style: 'currency',
+                                          currency: 'USD',
+                                      }).format(totalRevenue)
+                                    : item.id === 'totalSales'
+                                    ? `+${totalSales}`
+                                    : `+${totalSubscriptions}`}
+                            </div>
+                            <p className="text-xs text-muted-foreground">+20.1% from last month</p>
+                        </CardContent>
+                    </Card>
+                ))}
             </div>
 
             <div className="flex flex-wrap gap-5 my-5`">
                 <RecentSubscriptions />
                 <RecentSales />
             </div>
-        </>
+        </Suspense>
     )
 }
 

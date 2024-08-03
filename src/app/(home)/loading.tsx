@@ -1,6 +1,6 @@
 import { Loader } from 'lucide-react'
 
-import BaseLayoutSkeleton from '~/components/skeletons/base-layout-skeleton'
+import BaseLayoutSkeleton from '~/components/skeletons/base-layout'
 
 const Loading = () => {
     return (
