@@ -8,7 +8,7 @@ const Dashboard = ({
     searchParams: { tab: string }
 }) => {
     return (
-        <Tabs defaultValue={tab} className="w-full mx-auto my-10 px-2 md:px-10">
+        <Tabs defaultValue={tab!} className="w-full mx-auto my-10 px-2 md:px-10">
             <TabsList className="flex flex-col sm:flex-row w-full mx-auto h-auto">
                 {TABS_DASHBOARD.map((tab) => (
                     <Link href={`?tab=${tab.id}`} key={tab.id} className="w-full">

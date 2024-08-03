@@ -1,29 +1,27 @@
-'use client'
-
-import { useQuery } from '@tanstack/react-query'
+import { use } from 'react'
 import { X } from 'lucide-react'
-import ProductCard from '~/components/product-card'
 
-import ProductSkeleton from '~/components/skeletons/product-skeleton'
+const ProductCard = dynamic(() => import('~/components/product-card'), {
+    loading: () => (
+        <div className="flex flex-wrap gap-10 justify-center">
+            {Array.from({ length: 3 }).map((_, i) => (
+                <ProductSkeleton key={i} />
+            ))}
+        </div>
+    ),
+})
 import { getProductsAction } from '../actions'
+import dynamic from 'next/dynamic'
+import ProductSkeleton from '~/components/skeletons/product-skeleton'
 
 const ExistingProducts = () => {
-    const { data: products = [], isLoading: loading } = useQuery({
-        queryKey: ['getProducts'],
-        queryFn: async () => await getProductsAction(),
-    })
+    const products = use(getProductsAction())
 
     return (
         <>
             <p className="text-3xl tracking-tighter my-3 font-medium">Existing Products</p>
 
-            {loading ? (
-                <div className="flex flex-wrap gap-10 justify-center">
-                    {Array.from({ length: 3 }).map((_, i) => (
-                        <ProductSkeleton key={i} />
-                    ))}
-                </div>
-            ) : products.length ? (
+            {products.length ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {products.map((product) => (
                         <ProductCard key={product.id} product={product} adminView />

@@ -1,16 +1,13 @@
 import { Product } from '@prisma/client'
-import { use } from 'react'
+import { lazy, use } from 'react'
 
-import UnderlineText from '~/components/decorators/underline-text'
-import ProductCard from '~/components/product-card'
 import prisma from '~/db/prisma'
+import UnderlineText from '~/components/decorators/underline-text'
+const ProductCard = lazy(() => import('~/components/product-card'))
 
 const Merch = () => {
     const products: Product[] = use(
-        prisma.product.findMany({
-            where: { isArchived: false },
-            orderBy: { name: 'asc' },
-        }),
+        prisma.product.findMany({ where: { isArchived: false }, orderBy: { name: 'asc' } }),
     )
 
     return (

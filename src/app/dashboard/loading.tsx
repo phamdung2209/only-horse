@@ -1,14 +1,19 @@
+'use client'
+
 import { Loader } from 'lucide-react'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 
 import { Tabs, TabsList, TabsTrigger } from '~/components/ui/tabs'
 import { TABS_DASHBOARD_SKELETON } from '~/lib/const'
 
 const Loading = () => {
+    const searchParams = useSearchParams()
+
     return (
         <>
             <Tabs
-                defaultValue={TABS_DASHBOARD_SKELETON[0].id}
+                defaultValue={searchParams.get('tab') ?? TABS_DASHBOARD_SKELETON[0].id}
                 className="w-full mx-auto my-10 px-2 md:px-10"
             >
                 <TabsList className="flex flex-col sm:flex-row w-full mx-auto h-auto">
