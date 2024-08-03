@@ -11,7 +11,7 @@ const UnderlineText = ({
     return (
         <span
             className={cn(
-                'underline underline-offset-4 decoration-dashed decoration-sky-400',
+                'underline underline-offset-4 decoration-dashed decoration-primary',
                 className,
             )}
         >

@@ -17,7 +17,7 @@ const AuthScreen = () => {
                 <div className="max-w-6xl mx-auto px-4">
                     <p className="text-3xl md:text-5xl tracking-tight mt-4 bottom-8 font-semibold text-center">
                         Today's{' '}
-                        <UnderlineText className="underline-offset-8 md:underline-offset-[12px] decoration-wavy">
+                        <UnderlineText className="underline-offset-8 md:underline-offset-[15px] decoration-wavy">
                             Highlight
                         </UnderlineText>
                         <span className="text-2xl md:text-4xl mt-1">👇</span>

@@ -1,6 +1,5 @@
 import { Prisma, User } from '@prisma/client'
 import { ImageIcon, LockKeyholeIcon } from 'lucide-react'
-// import { CldVideoPlayer } from 'next-cloudinary'
 import Image from 'next/image'
 import Link from 'next/link'
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
@@ -12,6 +11,7 @@ import { use } from 'react'
 import DialogComment from './comment-post/dialog-comment'
 import DeletePost from './delete-post'
 import LikePost from './like-post'
+import VideoControl from './video-control'
 
 export type TPostWithComments = Prisma.PostGetPayload<{
     include: { comments: { include: { user: true } }; likesList: true }
@@ -67,21 +67,7 @@ const Post = ({
                         </div>
                     )}
 
-                    {post.mediaType === 'video' && (
-                        // <CldVideoPlayer
-                        //     width={960}
-                        //     height={540}
-                        //     className="rounded-lg"
-                        //     src={post.mediaUrl}
-                        // />
-                        <div className="relative w-full pb-[56.25%] rounded-lg overflow-hidden">
-                            <video
-                                className="absolute top-0 left-0 w-full h-full"
-                                src={post.mediaUrl}
-                                controls
-                            />
-                        </div>
-                    )}
+                    {post.mediaType === 'video' && <VideoControl mediaUrl={post.mediaUrl} />}
                 </>
             )}
 

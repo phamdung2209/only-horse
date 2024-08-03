@@ -44,7 +44,7 @@ export const tiers: PricingTier[] = [
         id: '0',
         href: '/subscribe',
         price: { '1': '$89', '2': '$999' },
-        discountPrice: { '1': '$59', '2': '$599' },
+        discountPrice: { '1': '$59', '2': '$499' },
         description: `Get access to our exclusive content. Cancel anytime.`,
         features: [
             `Access to all premium content`,
@@ -173,7 +173,7 @@ const Pricing = () => {
                                 {tier.features.map((feature) => (
                                     <li key={feature} className="flex items-center gap-x-2 text-sm">
                                         <CheckIcon
-                                            className="h-6 w-6 flex-none text-sky-500"
+                                            className="h-6 w-6 flex-none text-primary"
                                             aria-hidden="true"
                                         />
                                         {feature}
@@ -219,7 +219,7 @@ const Pricing = () => {
 
                                     <Button
                                         asChild
-                                        className="my-3"
+                                        className="my-3 text-white"
                                         onClick={() => {
                                             setLoading(true)
 

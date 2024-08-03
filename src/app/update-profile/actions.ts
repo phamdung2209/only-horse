@@ -55,7 +55,7 @@ export const updateUserAction = async ({ name, image }: { name: string; image: s
             data: updateFields,
         })
 
-        revalidatePath('/update-profile', 'layout')
+        revalidatePath('/update-profile', 'page')
 
         return { message: 'Great!, your profile has been updated.' }
     } catch (error: any) {

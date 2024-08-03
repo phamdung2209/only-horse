@@ -3,6 +3,7 @@
 import { LayoutDashboard } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+
 import config from '~/configs'
 import { SIDEBAR_LINKS } from '~/lib/const'
 import { cn } from '~/lib/utils'

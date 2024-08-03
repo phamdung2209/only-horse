@@ -4,6 +4,16 @@ import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 import { revalidatePath } from 'next/cache'
 import prisma from '~/db/prisma'
 
+export const getAdminAction = async () => {
+    try {
+        const admin = await prisma.user.findUnique({ where: { email: process.env.ADMIN_EMAIL! } })
+        return admin
+    } catch (error: any) {
+        console.error('Error in getAdminAction: ', error.message)
+        return null
+    }
+}
+
 // like, comment, delete, get posts
 export const getPostsAction = async () => {
     try {

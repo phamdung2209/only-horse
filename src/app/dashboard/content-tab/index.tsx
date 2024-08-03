@@ -1,6 +1,6 @@
 'use client'
 
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { Loader, TriangleAlert } from 'lucide-react'
 import { CldUploadWidget, CldVideoPlayer, CloudinaryUploadWidgetInfo } from 'next-cloudinary'
 import Image from 'next/image'
@@ -26,7 +26,6 @@ import { useToast } from '~/components/ui/use-toast'
 import { ToastAction } from '~/components/ui/toast'
 
 const ContentTab = () => {
-    console.log('render ContentTab')
     const [textareaValue, setTextareaValue] = useState<string>('')
     const [mediaType, setMediaType] = useState<'video' | 'image'>('image')
     const [isPublic, setIsPublic] = useState<boolean>(false)
