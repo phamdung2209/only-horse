@@ -26,9 +26,7 @@ export const getUserAction = async () => {
         const user = await getUser()
         if (!user) throw new Error('Unauthorized')
 
-        const currentUser = prisma.user.findUnique({
-            where: { id: user.id },
-        })
+        const currentUser = await prisma.user.findUnique({ where: { id: user.id } })
         if (!currentUser) throw new Error('User not found')
 
         return currentUser

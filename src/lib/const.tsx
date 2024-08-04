@@ -1,13 +1,14 @@
 import { CreditCard, DollarSign, Home, Shirt, Users } from 'lucide-react'
 import dynamic from 'next/dynamic'
+import { lazy } from 'react'
 
 import AnalyticsSkeleton from '~/components/skeletons/dashboard/analytics-skeleton'
 import config from '~/configs'
 const Analytics = dynamic(() => import('~/app/dashboard/analytics-tab'), {
     loading: () => <AnalyticsSkeleton />,
 })
-const ContentTab = dynamic(() => import('~/app/dashboard/content-tab'))
-const StoreTab = dynamic(() => import('~/app/dashboard/store-tab'))
+const ContentTab = lazy(() => import('~/app/dashboard/content-tab'))
+const StoreTab = lazy(() => import('~/app/dashboard/store-tab'))
 
 export type SidebarLink = typeof SIDEBAR_LINKS
 export type TTabs_Dashboard = {

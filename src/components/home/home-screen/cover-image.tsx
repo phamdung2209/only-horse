@@ -5,9 +5,13 @@ import Image from 'next/image'
 import prisma from '~/db/prisma'
 
 const CoverImage = ({ adminName }: { adminName?: string }) => {
-    const imageCount = use(prisma.post.count({ where: { mediaType: 'image' } }))
-    const videoCount = use(prisma.post.count({ where: { mediaType: 'video' } }))
-    const heartCount = use(prisma.post.aggregate({ _sum: { likes: true } }))
+    const [imageCount, videoCount, heartCount] = use(
+        Promise.all([
+            prisma.post.count({ where: { mediaType: 'image' } }),
+            prisma.post.count({ where: { mediaType: 'video' } }),
+            prisma.post.aggregate({ _sum: { likes: true } }),
+        ]),
+    )
 
     return (
         <div className="h-44 overflow-hidden relative">
