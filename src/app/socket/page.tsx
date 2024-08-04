@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from 'react'
 import io from 'socket.io-client'
-import { sendMessages } from './actions'
 import config from '~/configs'
 import { Button } from '~/components/ui/button'
 const socket = io(config.socketUrl)
