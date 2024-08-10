@@ -3,6 +3,7 @@
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 import { revalidatePath } from 'next/cache'
 
+import config from '~/configs'
 import prisma from '~/db/prisma'
 
 type TPostArgs = {
@@ -23,7 +24,7 @@ const checkIfAdmin = async () => {
     const user = await getUser()
     if (!user) throw new Error('User not found')
 
-    const isAdmin = user.email === process.env.ADMIN_EMAIL
+    const isAdmin = user.email === config.adminEmail
     if (!isAdmin) throw new Error('Unauthorized')
 
     return user

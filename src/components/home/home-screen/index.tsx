@@ -6,9 +6,10 @@ import UserProfile from './user-profile'
 import Posts from './posts'
 import { getUserAction } from '~/app/update-profile/actions'
 import prisma from '~/db/prisma'
+import config from '~/configs'
 
 const HomeScreen = () => {
-    const admin = use(prisma.user.findUnique({ where: { email: process.env.ADMIN_EMAIL! } }))
+    const admin = use(prisma.user.findUnique({ where: { email: config.adminEmail } }))
     const user = use(getUserAction())
 
     if (!user) return notFound()

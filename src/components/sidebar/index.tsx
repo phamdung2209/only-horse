@@ -24,7 +24,7 @@ const Sidebar = () => {
     const user = use(getUser())
     const userProfile = use(getUserAction())
 
-    const isAdmin: boolean = process.env.ADMIN_EMAIL === user?.email
+    const isAdmin: boolean = config.adminEmail === user?.email
 
     return (
         <div className="flex lg:w-1/5 sm:flex-col gap-4 sm:px-2 border-r sm:sticky fixed left-0 sm:top-0 sm:h-screen z-10 right-0 justify-center sm:justify-start bottom-0 p-3 bg-background">

@@ -7,6 +7,7 @@ const config = {
     stripe,
     socketUrl: process.env.NEXT_PUBLIC_SOCKET_URL!,
     ablyKey: process.env.NEXT_PUBLIC_ABLY_KEY!,
+    adminEmail: process.env.ADMIN_EMAIL!,
 }
 
 export default config
