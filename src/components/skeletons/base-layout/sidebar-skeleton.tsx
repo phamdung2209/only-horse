@@ -24,7 +24,7 @@ const SidebarSkeleton = () => {
             </Avatar>
 
             <nav className="flex flex-col gap-3">
-                <NavLink isAdmin={true} />
+                <NavLink isAdmin={false} />
 
                 <ModeToggle />
 

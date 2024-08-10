@@ -8,7 +8,7 @@ import { getUserAction } from '~/app/update-profile/actions'
 import prisma from '~/db/prisma'
 
 const HomeScreen = () => {
-    const admin = use(prisma.user.findUnique({ where: { email: process.env.ADMIN_EMAIL } }))
+    const admin = use(prisma.user.findFirst({ where: { email: process.env.ADMIN_EMAIL } }))
     const user = use(getUserAction())
 
     if (!user) return notFound()

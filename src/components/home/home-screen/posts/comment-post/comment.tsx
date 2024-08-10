@@ -1,9 +1,7 @@
-import { Prisma } from '@prisma/client'
 import { memo, useEffect, useRef } from 'react'
 
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
-
-type TCommentWithUser = Prisma.CommentGetPayload<{ include: { user: true } }>
+import { TCommentWithUser } from '~/types'
 
 const Comment = ({ comment }: { comment: TCommentWithUser }) => {
     const latestCommentRef = useRef<HTMLDivElement | null>(null)

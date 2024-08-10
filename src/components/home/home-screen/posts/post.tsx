@@ -1,4 +1,5 @@
 import { use } from 'react'
+import dynamic from 'next/dynamic'
 import { Prisma, User } from '@prisma/client'
 import { ImageIcon, LockKeyholeIcon } from 'lucide-react'
 import Image from 'next/image'
@@ -8,10 +9,10 @@ import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { buttonVariants } from '~/components/ui/button'
 import config from '~/configs'
-import DialogComment from './comment-post/dialog-comment'
-import DeletePost from './delete-post'
 import LikePost from './like-post'
-import VideoControl from './video-control'
+const VideoControl = dynamic(() => import('./video-control'))
+const DeletePost = dynamic(() => import('./delete-post'))
+const DialogComment = dynamic(() => import('./comment-post/dialog-comment'))
 
 export type TPostWithComments = Prisma.PostGetPayload<{
     include: { comments: { include: { user: true } }; likesList: true }

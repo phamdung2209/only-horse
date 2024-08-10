@@ -2,7 +2,7 @@ import React, { memo } from 'react'
 
 const Footer = () => {
     return (
-        <footer className="md:px-8 md:py-0 border-t">
+        <footer className="md:px-8 md:py-0 border-t sm:pb-0 pb-14">
             <div className="container flex  items-center gap-4 h-24">
                 <p className="text-balance text-center text-sm leading-loose text-muted-foreground md:text-left">
                     Built by{' '}

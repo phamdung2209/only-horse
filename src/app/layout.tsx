@@ -7,6 +7,7 @@ import { ThemeProvider } from '~/components/providers/theme-provider'
 import Footer from '~/components/footer'
 import TanStackProvider from '~/providers/tan-stack-provider'
 import { Toaster } from '~/components/ui/toaster'
+import GoToTop from '~/components/go-to-top'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -53,6 +54,7 @@ export default function RootLayout({
                     </main>
                 </ThemeProvider>
 
+                <GoToTop />
                 <Toaster />
             </body>
         </html>

@@ -2,6 +2,7 @@
 
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 import { revalidatePath } from 'next/cache'
+
 import prisma from '~/db/prisma'
 
 // like, comment, delete, get posts
@@ -13,7 +14,7 @@ export const getPostsAction = async () => {
 
         const posts = await prisma.post.findMany({
             include: {
-                comments: { include: { user: true } },
+                comments: { include: { user: true }, orderBy: { createdAt: 'asc' } },
                 likesList: {
                     where: { userId: user.id },
                 },
@@ -68,6 +69,7 @@ export const likePostAction = async (postId: string) => {
 
         const userProfile = await prisma.user.findUnique({
             where: { id: user.id },
+            select: { isSubscribed: true },
         })
         if (!userProfile) throw new Error('User not found')
         if (!userProfile.isSubscribed) throw new Error('You need to subscribe to like')
@@ -96,7 +98,7 @@ export const likePostAction = async (postId: string) => {
             data: { likes: newLikes },
         })
 
-        revalidatePath('/')
+        // revalidatePath('/')
 
         return { message: 'Good job! Post liked' }
     } catch (error: any) {
@@ -113,21 +115,24 @@ export const commentPostAction = async (postId: string, comment: string) => {
 
         const userProfile = await prisma.user.findUnique({
             where: { id: user.id },
+            select: { id: true, isSubscribed: true },
         })
+
         if (!userProfile) throw new Error('User not found')
         if (!userProfile.isSubscribed) throw new Error('You need to subscribe to comment')
 
-        await prisma.comment.create({
+        const data = await prisma.comment.create({
             data: {
                 postId,
-                userId: user.id,
+                userId: userProfile.id,
                 text: comment,
             },
+            include: { user: true },
         })
 
-        revalidatePath('/')
+        // revalidatePath('/')
 
-        return { message: 'Good job! Commented' }
+        return data
     } catch (error: any) {
         console.error('Error in commentPostAction: ', error.message)
         throw new Error(error.message)

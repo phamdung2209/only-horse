@@ -27,9 +27,9 @@ const Sidebar = () => {
     const isAdmin: boolean = process.env.ADMIN_EMAIL === user?.email
 
     return (
-        <div className="flex lg:w-1/5 flex-col gap-3 px-2 border-r sticky left-0 top-0 h-screen z-10">
+        <div className="flex lg:w-1/5 sm:flex-col gap-3 sm:px-2 border-r sm:sticky fixed left-0 sm:top-0 sm:h-screen z-10 right-0 justify-center sm:justify-start bottom-0 p-3 bg-background">
             <Link href={config.routes.updateProfile} className="max-w-fit">
-                <Avatar className="mt-4 cursor-pointer">
+                <Avatar className="sm:mt-4 cursor-pointer">
                     <TooltipProvider>
                         <Tooltip>
                             <TooltipTrigger>
@@ -49,7 +49,7 @@ const Sidebar = () => {
                 </Avatar>
             </Link>
 
-            <nav className="flex flex-col gap-3">
+            <nav className="flex sm:flex-col gap-3">
                 <NavLink isAdmin={isAdmin} />
 
                 <ModeToggle />

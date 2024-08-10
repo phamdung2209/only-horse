@@ -12,10 +12,14 @@ import config from '~/configs'
 const Page = ({ searchParams }: { searchParams: { orderId: string } }) => {
     const { orderId } = searchParams
     const { product, shippingAddress: shipping, ...order } = use(checkProductPaidAction(orderId))
+
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center p-6">
+        <div className="flex flex-col items-center justify-center p-6">
             <div className="flex flex-col items-center">
-                <ZoomedImage imgSrc={product.image} className="h-96 w-96 rounded-md my-5" />
+                <ZoomedImage
+                    imgSrc={product.image}
+                    className="rounded-md my-5 md:h-96 md:w-96 sm:h-80 sm:w-80 h-56 w-56"
+                />
 
                 <h1 className="text-2xl font-bold mb-4">
                     Purchase <UnderlineText>Successful!</UnderlineText>
