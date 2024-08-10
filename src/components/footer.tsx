@@ -12,7 +12,7 @@ const Footer = () => {
                         rel="noreferrer"
                         className="font-medium underline underline-offset-4"
                     >
-                        DungPV
+                        DUNG_PHAM
                     </a>
                     , contact me at{' '}
                     <a
