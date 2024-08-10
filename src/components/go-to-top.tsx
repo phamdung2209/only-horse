@@ -7,7 +7,7 @@ const GoToTop = () => {
     const [show, setShow] = useState<boolean>(false)
 
     const handleScroll = useCallback(() => {
-        if (window.scrollY > 100) setShow(true)
+        if (window.pageYOffset > 100) setShow(true)
         else setShow(false)
     }, [])
 

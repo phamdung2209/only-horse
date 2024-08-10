@@ -16,14 +16,14 @@ import { Skeleton } from '~/components/ui/skeleton'
 
 const SidebarSkeleton = () => {
     return (
-        <div className="flex lg:w-1/5 flex-col gap-3 px-2 border-r sticky left-0 top-0 h-screen z-10">
-            <Avatar className="mt-4 cursor-pointer">
+        <div className="flex lg:w-1/5 sm:flex-col gap-4 sm:px-2 border-r sm:sticky fixed left-0 sm:top-0 sm:h-screen z-10 right-0 justify-center sm:justify-start bottom-0 p-3 bg-background">
+            <Avatar className="sm:mt-4 cursor-pointer">
                 <AvatarFallback>
                     <Skeleton className="w-full h-full" />
                 </AvatarFallback>
             </Avatar>
 
-            <nav className="flex flex-col gap-3">
+            <nav className="flex sm:flex-col gap-3">
                 <NavLink isAdmin={false} />
 
                 <ModeToggle />
