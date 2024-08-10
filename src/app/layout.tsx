@@ -1,13 +1,14 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import 'next-cloudinary/dist/cld-video-player.css'
+import dynamic from 'next/dynamic'
 
 import './globals.css'
 import { ThemeProvider } from '~/components/providers/theme-provider'
 import Footer from '~/components/footer'
 import TanStackProvider from '~/providers/tan-stack-provider'
 import { Toaster } from '~/components/ui/toaster'
-import GoToTop from '~/components/go-to-top'
+const GoToTop = dynamic(() => import('~/components/go-to-top'))
 
 const inter = Inter({ subsets: ['latin'] })
 
