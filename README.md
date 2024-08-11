@@ -18,6 +18,10 @@ Some Features:
 -   📝 Data Aggregation with Prisma
 -   🖼️ Edit Profile
 -   📷 Image/Video Uploads using Cloudinary
+-   📱 Responsive Design
+-   📈 SEO Optimization
+-   🚀 Fast Load Times
+-   🎉 Realtime like and comment post
 -   💙 Awesome Landing Page
 -   🌐 Deployment
 -   👀 And Millions of Other Cool Features
@@ -71,6 +75,9 @@ DATABASE_URL=<any_postgres_db_url>
 
 // RESEND
 RESEND_API_KEY=<get_from_resend>
+
+# ABLY
+NEXT_PUBLIC_ABLY_KEY=<get_from_ably>
 
 ADMIN_EMAIL=<your_email>
 ```
