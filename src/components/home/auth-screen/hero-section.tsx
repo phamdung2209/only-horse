@@ -4,7 +4,7 @@ import AuthButton from './auth-button'
 
 const HeroSection = () => {
     return (
-        <div className="flex h-screen w-full">
+        <div className="flex h-svh w-full">
             <div className="flex-1 flex overflow-hidden bg-[#00b0f0a6] relative justify-center items-center z-10 bg-noise">
                 <Image
                     src="/of-logo.svg"
@@ -14,13 +14,13 @@ const HeroSection = () => {
                     className="w-auto h-auto absolute -left-1/4 opacity-15 -bottom-52 lg-scale-150 xl-scale-105 scale-[2] pointer-events-none select-none"
                 />
 
-                <div className="flex flex-col gap-2  px-4 xl:ml-40 text-center md:text-start font-semibold">
+                <div className="flex flex-col gap-2 px-4 xl:ml-40 text-center md:text-start font-semibold">
                     <Image
                         src={'/onlyhorse.png'}
                         alt="Only Horse Logo"
                         width={769}
                         height={182}
-                        className="mt-20 w-[420px] z-0 pointer-events-none select-none"
+                        className="mt-2 sm:mt-20 w-[420px] z-0 pointer-events-none select-none"
                     />
 
                     <p className="text-2xl md:text-3xl text-balance">
@@ -30,7 +30,7 @@ const HeroSection = () => {
                         </span>{' '}
                         what it look like.
                     </p>
-                    <p className="text-2xl md:text-3xl mb-32 leading-snug text-balance">
+                    <p className="text-2xl md:text-3xl mb-10 sm:mb-32 leading-snug text-balance">
                         Built for{' '}
                         <span className="uppercase bg-sky-500 px-2 text-white">horses</span> NOT{' '}
                         <span className="bg-red-500 px-2 font-bold text-white uppercase">

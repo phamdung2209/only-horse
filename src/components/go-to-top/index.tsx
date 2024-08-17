@@ -19,7 +19,7 @@ const GoToTop = () => {
     return (
         <ArrowBigUpDash
             className={`transition-transform duration-300 ease-in-out fixed text-white bottom-20 sm:bottom-4 right-4 cursor-pointer h-9 w-9 text-primary-foreground rounded-full p-2 bg-primary active:opacity-80 ${
-                show ? 'translate-y-0' : 'translate-y-16'
+                show ? 'translate-y-0' : 'translate-y-96'
             }`}
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         />
