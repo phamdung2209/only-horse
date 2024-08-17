@@ -1,6 +1,6 @@
 <h1 align="center">OnlyFans but for Horses 🐴</h1>
 
-![Demo App](/public/banner/horse-banner.png)
+![Demo App](https://res.cloudinary.com/den0awox0/image/upload/v1723907120/horse/DEMO/uk8tjwmnedsxvznwywvi.png)
 
 Some Features:
 
