@@ -4,6 +4,7 @@ import { User } from '@prisma/client'
 import UnderlineText from '~/components/decorators/underline-text'
 import Post from './post'
 import { getPostsAction } from '../actions'
+import BlurFade from '~/components/magicui/blur-fade'
 
 const Posts = ({ admin, isSubscribed }: { admin: User; isSubscribed: boolean }) => {
     const posts = use(getPostsAction())
@@ -12,7 +13,9 @@ const Posts = ({ admin, isSubscribed }: { admin: User; isSubscribed: boolean }) 
         <div className="mb-3">
             {posts?.length ? (
                 posts.map((post) => (
-                    <Post key={post.id} post={post} admin={admin} isSubscribed={isSubscribed} />
+                    <BlurFade key={post.id} inView delay={0.25} yOffset={0}>
+                        <Post post={post} admin={admin} isSubscribed={isSubscribed} />
+                    </BlurFade>
                 ))
             ) : (
                 <div className="mt-10 px-3">
