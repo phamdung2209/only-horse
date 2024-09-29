@@ -1,7 +1,6 @@
 import { use } from 'react'
 import { notFound } from 'next/navigation'
 
-import BaseLayout from '~/components/base-layout'
 import UnderlineText from '~/components/decorators/underline-text'
 import ProductCard from '~/components/product-card'
 import ProductCheckout from './product-checkout'
