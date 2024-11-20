@@ -93,7 +93,7 @@ npm install
 ```shell
 npm run dev
 ```
-```html
+```js
 <div>...content</div>
  ```
 <hr/>
