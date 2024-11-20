@@ -93,15 +93,15 @@ npm install
 ```shell
 npm run dev
 ```
-
+```html
+<div>...content</div>
+ ```
 <hr/>
 <hr/>
 This project is built for educational purposes only. If you have any questions, feel free to reach out to me on [Facebook](https://www.facebook.com/dungpv2209) or [Instagram](https://www.instagram.com/phamdung.22092003).
 <hr/>
 <hr/>
-```html
-<div>...content</div>
- ```
+
 ### Enjoy the project! 😊
 
 ### License
