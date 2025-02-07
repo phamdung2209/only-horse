@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { useChannel } from 'ably/react'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { Loader, MessageCircle, Send } from 'lucide-react'
-
 import {
     Dialog,
     DialogContent,
@@ -21,6 +20,11 @@ import { TCommentWithUser } from '~/types'
 import { commentPostAction } from '../../actions'
 import { getUserAction } from '~/app/update-profile/actions'
 
+type State = {
+    text: string
+    comments: TCommentWithUser[]
+}
+
 const ContainerComment = ({
     isSubscribed,
     post,
@@ -28,8 +32,10 @@ const ContainerComment = ({
     isSubscribed: boolean
     post: TPostWithComments
 }) => {
-    const [comment, setComment] = useState<string>('')
-    const [comments, setComments] = useState<TCommentWithUser[]>(post.comments)
+    const [{ text, comments }, setState] = useState<State>({
+        text: '',
+        comments: post.comments,
+    })
     const { toast } = useToast()
 
     const { data: user } = useQuery({
@@ -38,35 +44,47 @@ const ContainerComment = ({
     })
 
     const { channel } = useChannel('chat_comments', `chat_comments:${post.id}`, ({ data }) => {
-        setComments((prev) => {
-            const idx = prev.findIndex((c) => c.id.startsWith('temp-') && c.text === data.text)
-            return idx !== -1 ? prev.map((c, i) => (i === idx ? data : c)) : [...prev, data]
-        })
+        setState((prev) => ({
+            ...prev,
+            comments: (() => {
+                const idx = prev.comments.findIndex(
+                    (c) => c.id.startsWith('temp-') && c.text === data.text,
+                )
+                return idx !== -1
+                    ? prev.comments.map((c, i) => (i === idx ? data : c))
+                    : [...prev.comments, data]
+            })(),
+        }))
     })
 
     const { mutate: handleComment, isPending: sendingMsg } = useMutation({
         mutationKey: ['comment'],
         mutationFn: async () => {
-            if (!comment || sendingMsg || !user) return
+            if (!text || sendingMsg || !user) return
 
             const optimisticComment: TCommentWithUser = {
                 id: `temp-${Date.now()}`,
-                text: comment,
+                text: text,
                 postId: post.id,
                 userId: user.id,
-                user: user,
+                user,
                 updatedAt: new Date(),
                 createdAt: new Date(),
             }
 
-            setComments((prev) => [...prev, optimisticComment])
-            setComment('')
+            setState((prev) => ({
+                text: '',
+                comments: [...prev.comments, optimisticComment],
+            }))
 
             try {
-                const data = await commentPostAction(post.id, comment)
+                const data = await commentPostAction(post.id, text)
                 channel.publish(`chat_comments:${post.id}`, data)
             } catch (error) {
-                setComments((prev) => prev.filter((c) => c.id !== optimisticComment.id))
+                setState((prev) => ({
+                    ...prev,
+                    comments: prev.comments.filter((c) => c.id !== optimisticComment.id),
+                }))
                 throw error
             }
         },
@@ -91,7 +109,6 @@ const ContainerComment = ({
                                 description: 'You need to subscribe to comment',
                                 variant: 'destructive',
                             })
-                            return
                         }
                     }}
                 >
@@ -132,8 +149,13 @@ const ContainerComment = ({
                             <form action={() => handleComment()} className="w-full relative">
                                 <Input
                                     placeholder="Write a comment..."
-                                    value={comment}
-                                    onChange={(e) => setComment(e.target.value)}
+                                    value={text}
+                                    onChange={(e) =>
+                                        setState((prev) => ({
+                                            ...prev,
+                                            text: e.target.value,
+                                        }))
+                                    }
                                     className="pr-12"
                                 />
                                 <Button
