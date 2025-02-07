@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useChannel } from 'ably/react'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { Loader, MessageCircle, Send } from 'lucide-react'
 
 import {
@@ -19,6 +19,7 @@ import { Button } from '~/components/ui/button'
 import { useToast } from '~/components/ui/use-toast'
 import { TCommentWithUser } from '~/types'
 import { commentPostAction } from '../../actions'
+import { getUserAction } from '~/app/update-profile/actions'
 
 const ContainerComment = ({
     isSubscribed,
@@ -31,17 +32,43 @@ const ContainerComment = ({
     const [comments, setComments] = useState<TCommentWithUser[]>(post.comments)
     const { toast } = useToast()
 
-    const { channel } = useChannel('chat_comments', `chat_comments:${post.id}`, (dataMessage) =>
-        setComments((prev) => [...prev, dataMessage.data]),
-    )
+    const { data: user } = useQuery({
+        queryKey: ['user'],
+        queryFn: async () => await getUserAction(),
+    })
+
+    const { channel } = useChannel('chat_comments', `chat_comments:${post.id}`, ({ data }) => {
+        setComments((prev) => {
+            const idx = prev.findIndex((c) => c.id.startsWith('temp-') && c.text === data.text)
+            return idx !== -1 ? prev.map((c, i) => (i === idx ? data : c)) : [...prev, data]
+        })
+    })
 
     const { mutate: handleComment, isPending: sendingMsg } = useMutation({
         mutationKey: ['comment'],
         mutationFn: async () => {
-            if (!comment || sendingMsg) return
+            if (!comment || sendingMsg || !user) return
+
+            const optimisticComment: TCommentWithUser = {
+                id: `temp-${Date.now()}`,
+                text: comment,
+                postId: post.id,
+                userId: user.id,
+                user: user,
+                updatedAt: new Date(),
+                createdAt: new Date(),
+            }
+
+            setComments((prev) => [...prev, optimisticComment])
             setComment('')
-            const data = await commentPostAction(post.id, comment)
-            channel.publish(`chat_comments:${post.id}`, data)
+
+            try {
+                const data = await commentPostAction(post.id, comment)
+                channel.publish(`chat_comments:${post.id}`, data)
+            } catch (error) {
+                setComments((prev) => prev.filter((c) => c.id !== optimisticComment.id))
+                throw error
+            }
         },
         onError(error) {
             toast({
@@ -80,7 +107,7 @@ const ContainerComment = ({
                     <DialogHeader>
                         <DialogTitle>Comments</DialogTitle>
                     </DialogHeader>
-                    <ScrollArea className="h-[400px] rounded-md p-4">
+                    <ScrollArea className="h-[400px] rounded-md px-4 pt-4">
                         {comments.length ? (
                             comments.map((comment) => (
                                 <Comment key={comment.id} comment={comment} />
@@ -93,24 +120,34 @@ const ContainerComment = ({
                     </ScrollArea>
 
                     <DialogFooter className="w-full">
-                        <form action={() => handleComment()} className="w-full relative">
-                            <Input
-                                placeholder="Write a comment..."
-                                value={comment}
-                                onChange={(e) => setComment(e.target.value)}
-                                className="pr-12"
-                            />
-                            <Button
-                                type="submit"
-                                className="bg-transparent hover:bg-transparent absolute right-0 top-0"
+                        <div className="flex gap-2 flex-col w-full">
+                            <span
+                                className={`text-xs text-muted-foreground ${
+                                    sendingMsg ? 'opacity-100' : 'opacity-0'
+                                }`}
                             >
-                                {sendingMsg ? (
-                                    <Loader className="w-5 h-5 text-primary animate-spin" />
-                                ) : (
-                                    <Send className="text-primary cursor-pointer" />
-                                )}
-                            </Button>
-                        </form>
+                                sending...
+                            </span>
+
+                            <form action={() => handleComment()} className="w-full relative">
+                                <Input
+                                    placeholder="Write a comment..."
+                                    value={comment}
+                                    onChange={(e) => setComment(e.target.value)}
+                                    className="pr-12"
+                                />
+                                <Button
+                                    type="submit"
+                                    className="bg-transparent hover:bg-transparent absolute right-0 top-0"
+                                >
+                                    {sendingMsg ? (
+                                        <Loader className="w-5 h-5 text-primary animate-spin" />
+                                    ) : (
+                                        <Send className="text-primary cursor-pointer" />
+                                    )}
+                                </Button>
+                            </form>
+                        </div>
                     </DialogFooter>
                 </DialogContent>
             )}
